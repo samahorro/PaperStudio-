@@ -22,6 +22,17 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Copy frontend build to backend
+        run: cp -r frontend/dist backend/public
+
       - name: Generate deployment package
         run: |
           cd backend

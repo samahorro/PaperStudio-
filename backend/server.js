@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const path = require('path');
 require('dotenv').config();
 
 const sequelize = require('./config/db');
@@ -14,13 +15,11 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+// ─── Serve Frontend ────────────────────────────────
+app.use(express.static(path.join(__dirname, 'public')));
+
 // ─── API Routes ───────────────────────────────────
 app.use('/api/auth', require('./routes/authRoutes'));
-
-// ─── Health Check ─────────────────────────────────
-app.get('/', (req, res) => {
-  res.send('<html><body style="background-color: white; color: black; font-family: sans-serif;"><h1>hello world</h1></body></html>');
-});
 
 app.get('/api/db-test', async (req, res) => {
   try {
@@ -29,6 +28,11 @@ app.get('/api/db-test', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: '❌ DB failed', error: error.message });
   }
+});
+
+// ─── Catch-All Route ──────────────────────────────
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ─── Start ────────────────────────────────────────
