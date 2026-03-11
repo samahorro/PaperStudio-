@@ -19,7 +19,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 
 // ─── Health Check ─────────────────────────────────
 app.get('/', (req, res) => {
-  res.json({ message: '🛍️ PaperStudio API is running!' });
+  res.send('<html><body style="background-color: white; color: black; font-family: sans-serif;"><h1>hello world</h1></body></html>');
 });
 
 app.get('/api/db-test', async (req, res) => {
