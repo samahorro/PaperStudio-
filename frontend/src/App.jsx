@@ -47,8 +47,7 @@ function App() {
       
       {currentPage === 'home' && (
         <div>
-          <h1>Craigslist Clone</h1>
-          <p>Welcome to our barebones marketplace.</p>
+          <h1>Homepage</h1>
         </div>
       )}
 
