@@ -1,100 +1,100 @@
 import React, { useState } from 'react'
 
 function App() {
-  const [placeholder1, setPlaceholder1] = useState('home')
-  const [placeholder2, setPlaceholder2] = useState(null)
-  const [placeholder3, setPlaceholder3] = useState([])
+  const [currentPage, setCurrentPage] = useState('home')
+  const [currentUser, setCurrentUser] = useState(null)
+  const [registeredUsers, setRegisteredUsers] = useState([])
 
-  const [placeholder4, setPlaceholder4] = useState('')
-  const [placeholder5, setPlaceholder5] = useState('')
+  const [registerUsername, setRegisterUsername] = useState('')
+  const [registerPassword, setRegisterPassword] = useState('')
 
-  const [placeholder6, setPlaceholder6] = useState('')
-  const [placeholder7, setPlaceholder7] = useState('')
-  const [placeholder8, setPlaceholder8] = useState('')
+  const [loginUsername, setLoginUsername] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+  const [formMessage, setFormMessage] = useState('')
 
-  const fn1 = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault()
-    setPlaceholder3([...placeholder3, { p1: placeholder4, p2: placeholder5 }])
-    setPlaceholder8('success')
+    setRegisteredUsers([...registeredUsers, { username: registerUsername, password: registerPassword }])
+    setFormMessage('Registration successful! You can now login.')
   }
 
-  const fn2 = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault()
-    const found = placeholder3.find(x => x.p1 === placeholder6 && x.p2 === placeholder7)
+    const found = registeredUsers.find(x => x.username === loginUsername && x.password === loginPassword)
     if (found) {
-      setPlaceholder2(found.p1)
-      setPlaceholder1('home')
+      setCurrentUser(found.username)
+      setCurrentPage('home')
     } else {
-      setPlaceholder8('fail')
+      setFormMessage('Invalid username or password')
     }
   }
 
-  const fn3 = () => {
-    setPlaceholder2(null)
+  const handleLogout = () => {
+    setCurrentUser(null)
   }
 
   return (
     <div style={{ backgroundColor: 'white', color: 'black', fontFamily: 'serif' }}>
       <div>
-        <a href="#" onClick={(e) => { e.preventDefault(); setPlaceholder8(''); setPlaceholder1('home') }}>[Placeholder 9]</a> | 
-        <a href="#" onClick={(e) => { e.preventDefault(); setPlaceholder8(''); setPlaceholder1('products') }}>[Placeholder 10]</a> | 
-        {!placeholder2 && <a href="#" onClick={(e) => { e.preventDefault(); setPlaceholder8(''); setPlaceholder1('login') }}>[Placeholder 11]</a>}
-        {!placeholder2 && <span> | </span>}
-        {!placeholder2 && <a href="#" onClick={(e) => { e.preventDefault(); setPlaceholder8(''); setPlaceholder1('register') }}>[Placeholder 12]</a>}
-        {placeholder2 && <a href="#" onClick={(e) => { e.preventDefault(); fn3() }}>[Placeholder 13] ({placeholder2})</a>}
+        <a href="#" onClick={(e) => { e.preventDefault(); setFormMessage(''); setCurrentPage('home') }}>Home</a> | 
+        <a href="#" onClick={(e) => { e.preventDefault(); setFormMessage(''); setCurrentPage('products') }}>Products</a> | 
+        {!currentUser && <a href="#" onClick={(e) => { e.preventDefault(); setFormMessage(''); setCurrentPage('login') }}>Login</a>}
+        {!currentUser && <span> | </span>}
+        {!currentUser && <a href="#" onClick={(e) => { e.preventDefault(); setFormMessage(''); setCurrentPage('register') }}>Register</a>}
+        {currentUser && <a href="#" onClick={(e) => { e.preventDefault(); handleLogout() }}>Logout ({currentUser})</a>}
       </div>
       <hr />
       
-      {placeholder1 === 'home' && (
+      {currentPage === 'home' && (
         <div>
-          <h1>Placeholder 14</h1>
-          <p>Placeholder 15</p>
+          <h1>Craigslist Clone</h1>
+          <p>Welcome to our barebones marketplace.</p>
         </div>
       )}
 
-      {placeholder1 === 'products' && (
+      {currentPage === 'products' && (
         <div>
-          <h1>Placeholder 16</h1>
+          <h1>Available Items</h1>
           <ul>
-            <li>Placeholder 17 - $10</li>
-            <li>Placeholder 18 - $20</li>
+            <li>Used Couch - $10</li>
+            <li>Bicycle - $20</li>
           </ul>
         </div>
       )}
 
-      {placeholder1 === 'register' && (
+      {currentPage === 'register' && (
         <div>
-          <h1>Placeholder 19</h1>
-          <form onSubmit={fn1}>
+          <h1>Create an Account</h1>
+          <form onSubmit={handleRegister}>
             <div>
-              <label>Placeholder 20: </label>
-              <input type="text" value={placeholder4} onChange={e => setPlaceholder4(e.target.value)} />
+              <label>Username: </label>
+              <input type="text" value={registerUsername} onChange={e => setRegisterUsername(e.target.value)} />
             </div>
             <div>
-              <label>Placeholder 21: </label>
-              <input type="password" value={placeholder5} onChange={e => setPlaceholder5(e.target.value)} />
+              <label>Password: </label>
+              <input type="password" value={registerPassword} onChange={e => setRegisterPassword(e.target.value)} />
             </div>
-            <button type="submit">Placeholder 22</button>
+            <button type="submit">Sign Up</button>
           </form>
-          {placeholder8 && <p>{placeholder8}</p>}
+          {formMessage && <p>{formMessage}</p>}
         </div>
       )}
 
-      {placeholder1 === 'login' && (
+      {currentPage === 'login' && (
         <div>
-          <h1>Placeholder 23</h1>
-          <form onSubmit={fn2}>
+          <h1>Sign In</h1>
+          <form onSubmit={handleLogin}>
             <div>
-              <label>Placeholder 24: </label>
-              <input type="text" value={placeholder6} onChange={e => setPlaceholder6(e.target.value)} />
+              <label>Username: </label>
+              <input type="text" value={loginUsername} onChange={e => setLoginUsername(e.target.value)} />
             </div>
             <div>
-              <label>Placeholder 25: </label>
-              <input type="password" value={placeholder7} onChange={e => setPlaceholder7(e.target.value)} />
+              <label>Password: </label>
+              <input type="password" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} />
             </div>
-            <button type="submit">Placeholder 26</button>
+            <button type="submit">Login</button>
           </form>
-          {placeholder8 && <p>{placeholder8}</p>}
+          {formMessage && <p>{formMessage}</p>}
         </div>
       )}
     </div>
