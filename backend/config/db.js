@@ -3,44 +3,42 @@ require('dotenv').config();
 
 // Create Sequelize instance connected to PostgreSQL (AWS RDS)
 const sequelize = new Sequelize(
-    process.env.DB_NAME,      // Database name
-    process.env.DB_USER,      // Username
-    process.env.DB_PASSWORD,  // Password
-    {
-        host: process.env.DB_HOST,   // RDS endpoint
-        port: process.env.DB_PORT || 5432,
-        dialect: 'postgres',
-
-        // Connection pool settings
-        pool: {
-            max: 5,       // Maximum number of connections
-            min: 0,       // Minimum number of connections
-            acquire: 30000, // Max time (ms) to get a connection before throwing error
-            idle: 10000     // Max time (ms) a connection can be idle before being released
-        },
-
-        // SSL is required for AWS RDS connections
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false // For RDS, we trust their certificate
-            }
-        },
-
-        // Logging: show SQL queries in development, silent in production
-        logging: process.env.NODE_ENV === 'development' ? console.log : false
-    }
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    },
+    logging: process.env.NODE_ENV === 'development' ? console.log : false
+  }
 );
 
 // Test the database connection
 const connectDB = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('✅ PostgreSQL connected successfully (AWS RDS)');
-    } catch (error) {
-        console.error('❌ Unable to connect to PostgreSQL:', error.message);
-        process.exit(1);
-    }
+  try {
+    await sequelize.authenticate();
+    console.log('✅ PostgreSQL connected successfully (AWS RDS)');
+  } catch (error) {
+    console.error('❌ Unable to connect to PostgreSQL:', error.message);
+    process.exit(1);
+  }
 };
 
-module.exports = { sequelize, connectDB };
+// Export sequelize as default AND as named export
+// This way Sam's code (require('../config/db')) AND our code (require('./config/db').sequelize) both work
+module.exports = sequelize;
+module.exports.sequelize = sequelize;
+module.exports.connectDB = connectDB;
