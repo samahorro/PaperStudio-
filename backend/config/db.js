@@ -13,15 +13,15 @@ const sequelize = new Sequelize(
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000
+      idle: 10000,
     },
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
+        rejectUnauthorized: false,
+      },
     },
-    logging: process.env.NODE_ENV === 'development' ? console.log : false
+    logging: process.env.NODE_ENV === 'development' ? console.log : false,
   }
 );
 
