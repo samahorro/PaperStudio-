@@ -5,15 +5,18 @@ const crypto = require('crypto');
 // Configure S3 Client
 // IMPORTANT: The region and bucket need to match what the user creates in AWS.
 // If the environment variables aren't set yet, it will fail gracefully when trying to upload.
-const s3 = new S3Client({
-  region: process.env.AWS_REGION || 'us-east-1',
-  credentials: {
-    // If running inside Elastic Beanstalk with an IAM role, AWS will auto-provide these.
-    // For local testing, the user must add them to their .env file.
+const s3Config = {
+  region: process.env.AWS_REGION || 'us-east-1'
+};
+
+if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
+  s3Config.credentials = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  }
-});
+  };
+}
+
+const s3 = new S3Client(s3Config);
 
 const uploadProductAndImage = async (req, res) => {
   try {
