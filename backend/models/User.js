@@ -31,6 +31,26 @@ const User = sequelize.define('User', {
   role: {
     type: DataTypes.ENUM('customer', 'admin'),
     defaultValue: 'customer'
+  },
+
+  isEmailVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+
+  emailVerificationCode: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+
+  mfaEnabled: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+
+  mfaSecret: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 
 }, {

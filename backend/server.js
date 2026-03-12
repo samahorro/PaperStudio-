@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── API Routes ───────────────────────────────────
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/products', require('./routes/productRoutes'));
 
 app.get('/api/db-test', async (req, res) => {
   try {
