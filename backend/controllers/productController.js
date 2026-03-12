@@ -21,8 +21,11 @@ const uploadProductAndImage = async (req, res) => {
     let imageUrl = null;
 
     // Check if the Admin uploaded a file via Multer
-    if (req.file) {
-      const BUCKET_NAME = process.env.S3_BUCKET_NAME;
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided in the request!" });
+    }
+
+    const BUCKET_NAME = process.env.S3_BUCKET_NAME;
       if (!BUCKET_NAME) {
         return res.status(500).json({ message: "S3_BUCKET_NAME environment variable is missing!" });
       }
@@ -44,7 +47,6 @@ const uploadProductAndImage = async (req, res) => {
 
       // Construct the public S3 URL (assuming the bucket allows public read access)
       imageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/products/${uniqueFilename}`;
-    }
 
     // Save the product details to the database, including the generated Image URL
     const newProduct = await Product.create({
