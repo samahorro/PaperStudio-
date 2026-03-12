@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Create Sequelize instance connected to PostgreSQL (AWS RDS)
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -26,19 +25,17 @@ const sequelize = new Sequelize(
   }
 );
 
-// Test the database connection
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ PostgreSQL connected successfully (AWS RDS)');
+    return true;
   } catch (error) {
     console.error('❌ Unable to connect to PostgreSQL:', error.message);
-    process.exit(1);
+    return false;
   }
 };
 
-// Export sequelize as default AND as named export
-// This way Sam's code (require('../config/db')) AND our code (require('./config/db').sequelize) both work
 module.exports = sequelize;
 module.exports.sequelize = sequelize;
 module.exports.connectDB = connectDB;

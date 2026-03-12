@@ -33,17 +33,20 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Start server first
 app.listen(PORT, () => {
   console.log(`🚀 PaperStudio API on port ${PORT}`);
 });
 
-// Connect DB in background
 const startDatabase = async () => {
   try {
-    await connectDB();
-    await sequelize.sync({ alter: true });
-    console.log('📦 Database tables synced');
+    const connected = await connectDB();
+
+    if (connected) {
+      await sequelize.sync();
+      console.log('📦 Database tables synced');
+    } else {
+      console.log('⚠️ Starting without database connection');
+    }
   } catch (error) {
     console.error('❌ Database startup failed:', error.message);
   }
