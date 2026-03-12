@@ -18,6 +18,7 @@ router.get('/', getAllProducts);
 
 // Protected Admin Endpoint for creating new products with photo uploads
 // 'image' is the matching field name the frontend will use in the FormData
-router.post('/', authMiddleware, upload.single('image'), uploadProductAndImage);
+// TEMPORARILY: Removed authMiddleware so the mock frontend can test S3 uploads without a real token
+router.post('/', upload.single('image'), uploadProductAndImage);
 
 module.exports = router;

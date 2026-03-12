@@ -56,13 +56,17 @@ function App() {
 
     try {
       const result = await createProduct('mock-token-here', formData)
-      setAdminMessage(`Success! Product created with S3 Image URL: ${result.product?.imageUrl}`)
-      setAdminProductName('')
-      setAdminProductDesc('')
-      setAdminProductPrice('')
-      setAdminProductImage(null)
+      if (result.product) {
+        setAdminMessage(`Success! Product created with S3 Image URL: ${result.product.imageUrl}`)
+        setAdminProductName('')
+        setAdminProductDesc('')
+        setAdminProductPrice('')
+        setAdminProductImage(null)
+      } else {
+        setAdminMessage(`Error: ${result.message || 'Failed to upload'}`)
+      }
     } catch (err) {
-      setAdminMessage('Failed to upload product.')
+      setAdminMessage(`Network/Server Error: ${err.message}`)
     }
   }
 
