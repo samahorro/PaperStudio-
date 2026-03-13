@@ -36,13 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // --------------------
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
-app.use('/api/cart', require('./routes/cartRoutes'));
-app.use('/api/orders', require('./routes/orderRoutes'));
-app.use('/api/payment', require('./routes/paymentRoutes'));
 
-// --------------------
-// Health / DB test
-// --------------------
 app.get('/api/db-test', async (req, res) => {
   try {
     await sequelize.authenticate();
