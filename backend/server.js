@@ -17,7 +17,8 @@ app.use(
   helmet({
     crossOriginOpenerPolicy: false,
     originAgentCluster: false,
-    contentSecurityPolicy: false, // prevents browser from upgrading http -> https
+    contentSecurityPolicy: false,
+    hsts: false, // prevents browser from forcing https
   })
 );
 
@@ -27,8 +28,6 @@ app.use(express.json());
 // --------------------
 // Static Files (React / Vite build)
 // --------------------
-
-// Serve built frontend assets
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -37,6 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // --------------------
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
+app.use('/api/cart', require('./routes/cartRoutes'));
+app.use('/api/orders', require('./routes/orderRoutes'));
+app.use('/api/payment', require('./routes/paymentRoutes'));
 
 // --------------------
 // Health / DB test
@@ -44,12 +46,10 @@ app.use('/api/products', require('./routes/productRoutes'));
 app.get('/api/db-test', async (req, res) => {
   try {
     await sequelize.authenticate();
-
     res.json({
       message: '✅ Database connected!',
       host: process.env.DB_HOST,
     });
-
   } catch (error) {
     res.status(500).json({
       message: '❌ DB failed',
@@ -78,13 +78,11 @@ app.listen(PORT, '0.0.0.0', () => {
 const startDatabase = async () => {
   try {
     const connected = await connectDB();
-
     if (connected) {
       console.log('✅ Database connection established');
     } else {
       console.log('⚠️ Starting without database connection');
     }
-
   } catch (error) {
     console.error('❌ Database startup failed:', error.message);
   }
