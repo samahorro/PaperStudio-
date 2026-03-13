@@ -17,6 +17,7 @@ app.use(
   helmet({
     crossOriginOpenerPolicy: false,
     originAgentCluster: false,
+    contentSecurityPolicy: false, // prevents browser from upgrading http -> https
   })
 );
 
@@ -27,10 +28,8 @@ app.use(express.json());
 // Static Files (React / Vite build)
 // --------------------
 
-// Explicitly serve assets first
+// Serve built frontend assets
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
-
-// Then serve the rest of public
 app.use(express.static(path.join(__dirname, 'public')));
 
 // --------------------
@@ -52,12 +51,10 @@ app.get('/api/db-test', async (req, res) => {
     });
 
   } catch (error) {
-
     res.status(500).json({
       message: '❌ DB failed',
       error: error.message,
     });
-
   }
 });
 
@@ -80,24 +77,16 @@ app.listen(PORT, '0.0.0.0', () => {
 // --------------------
 const startDatabase = async () => {
   try {
-
     const connected = await connectDB();
 
     if (connected) {
       console.log('✅ Database connection established');
-
-      // Avoid running migrations on startup in production
-      // await sequelize.sync();
-      // console.log('📦 Database tables synced');
-
     } else {
       console.log('⚠️ Starting without database connection');
     }
 
   } catch (error) {
-
     console.error('❌ Database startup failed:', error.message);
-
   }
 };
 
