@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
-const CartItem = sequelize.define('CartItem', {
+const OrderItem = sequelize.define('OrderItem', {
 
   id: {
     type: DataTypes.UUID,
@@ -9,7 +9,7 @@ const CartItem = sequelize.define('CartItem', {
     primaryKey: true
   },
 
-  userId: {
+  orderId: {
     type: DataTypes.UUID,
     allowNull: false
   },
@@ -22,10 +22,12 @@ const CartItem = sequelize.define('CartItem', {
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 1,
-    validate: {
-      min: 1
-    }
+    defaultValue: 1
+  },
+
+  unitPrice: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false
   },
 
   color: {
@@ -37,4 +39,4 @@ const CartItem = sequelize.define('CartItem', {
   timestamps: true
 });
 
-module.exports = CartItem;
+module.exports = OrderItem;

@@ -2,23 +2,40 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 
-const { uploadProductAndImage, getAllProducts } = require('../controllers/productController');
-const authMiddleware = require('../middleware/auth');
+const {
+  getAllProducts,
+  getProductById,
+  uploadProductAndImage,
+  updateProduct,
+  deleteProduct
+} = require('../controllers/productController');
 
-// Configure Multer to keep the file in memory (RAM) instead of writing it to disk.
-// This is required because we need to stream the buffer directly to AWS S3.
+const authMiddleware = require('../middleware/auth');
+const adminAuth = require('../middleware/adminAuth');
+const { validateProduct } = require('../middleware/validate');
+
+// Configure Multer for memory storage (for S3 streaming)
 const storage = multer.memoryStorage();
 const upload = multer({ 
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 } // Optional: limit image size to 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.'));
+    }
+  }
 });
 
-// Public endpoint to view products
+// Public endpoints
 router.get('/', getAllProducts);
+router.get('/:id', getProductById);
 
-// Protected Admin Endpoint for creating new products with photo uploads
-// 'image' is the matching field name the frontend will use in the FormData
-// TEMPORARILY: Removed authMiddleware so the mock frontend can test S3 uploads without a real token
-router.post('/', upload.single('image'), uploadProductAndImage);
+// Admin endpoints (protected)
+router.post('/', authMiddleware, adminAuth, upload.single('image'), validateProduct, uploadProductAndImage);
+router.put('/:id', authMiddleware, adminAuth, upload.single('image'), updateProduct);
+router.delete('/:id', authMiddleware, adminAuth, deleteProduct);
 
 module.exports = router;

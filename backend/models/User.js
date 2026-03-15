@@ -28,6 +28,31 @@ const User = sequelize.define('User', {
     allowNull: false
   },
 
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+
+  city: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+
+  state: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+
+  zipCode: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+
   role: {
     type: DataTypes.ENUM('customer', 'admin'),
     defaultValue: 'customer'
@@ -50,6 +75,16 @@ const User = sequelize.define('User', {
 
   mfaSecret: {
     type: DataTypes.STRING,
+    allowNull: true
+  },
+
+  passwordResetCode: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+
+  passwordResetExpires: {
+    type: DataTypes.DATE,
     allowNull: true
   }
 

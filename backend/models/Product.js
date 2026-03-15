@@ -19,12 +19,38 @@ const Product = sequelize.define('Product', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   },
+  category: {
+    type: DataTypes.ENUM('notebooks', 'sketchbooks', 'calendars', 'pens', 'pencils', 'cases'),
+    allowNull: false,
+    defaultValue: 'notebooks'
+  },
+  color: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  stock: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+    validate: {
+      min: 0
+    }
+  },
+  inStock: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
   imageUrl: {
     type: DataTypes.STRING,
     allowNull: true
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  hooks: {
+    beforeSave: (product) => {
+      product.inStock = product.stock > 0;
+    }
+  }
 });
 
 module.exports = Product;
