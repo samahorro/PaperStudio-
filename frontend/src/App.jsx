@@ -9,17 +9,13 @@ function App() {
 
   return (
     <div style={{ backgroundColor: 'white', color: 'black', fontFamily: 'serif' }}>
-      
-      {/* Navbar always visible */}
+
+      {/* Navbar /}
       <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
 
-      {/* Routes */}
+      {/ Routes */}
       <Routes>
         <Route path="/" element={<HomePage />} />
-
-        {/* You can expand later like this */}
-        {/* <Route path="/products" element={<ProductsPage />} /> */}
-        {/* <Route path="/admin" element={<AdminPage />} /> */}
       </Routes>
 
     </div>
