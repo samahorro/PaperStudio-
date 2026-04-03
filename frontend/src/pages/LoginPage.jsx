@@ -1,46 +1,34 @@
 import { useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
-import { loginUser } from '../utils/api'
+import { useAuth } from '../context/AuthContext'
 import './LoginPage.css'
 
-function LoginPage({ setCurrentUser }) {
+function LoginPage() {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({ email: '', password: '' })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  const { login, loading, error, setError } = useAuth()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
-    if(!formData.email || !formData.password) {
+    if (!email || !password) {
       setError('Please fill in all fields.')
       return
     }
 
-  setLoading(true)
+    const result = await login(email, password)
 
-    const data = await loginUser(formData)
-
-    if (data.token) {
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('user', JSON.stringify(data.user))
-      setCurrentUser(data.user)
-      if (data.user.role === 'admin') {
+    if (result.success) {
+      if (result.user.role === 'admin') {
         navigate('/admin')
       } else {
         navigate('/account')
       }
-    } else if (data.requiresMfa) {
-      navigate('/mfa', { state: { email: formData.email, password: formData.password } })
-    } else {
-      setError(data.message || 'Login failed. Please try again.')
+    } else if (result.requiresMfa) {
+      navigate('/mfa', { state: { email, password } })
     }
-    setLoading(false)
   }
 
   return (
@@ -62,20 +50,20 @@ function LoginPage({ setCurrentUser }) {
           <div className="login-field">
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               placeholder="Email"
+              autoComplete="email"
             />
           </div>
 
           <div className="login-field">
             <input
               type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
               placeholder="Password"
+              autoComplete="current-password"
             />
           </div>
         </div>

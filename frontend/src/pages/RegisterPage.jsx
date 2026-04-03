@@ -1,76 +1,47 @@
 import { useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
-import { registerUser, verifyRegistrationCode } from '../utils/api'
+import { useAuth } from '../context/AuthContext'
 import './LoginPage.css'
 
 function RegisterPage() {
   const navigate = useNavigate()
-  const [step, setStep] = useState('form') // 'form' or 'verify'
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  })
-  const [verifyCode, setVerifyCode] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  const { register, verify, loading, error, setError } = useAuth()
+  const [step, setStep] = useState('form')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [code, setCode] = useState('')
 
   const handleRegister = async (e) => {
     e.preventDefault()
-    setLoading(true)
     setError('')
 
-    if(!formData.firstName || !formData.lastName || !formData.username || !formData.email || !formData.password) {
+    if (!firstName || !lastName || !email || !password) {
       setError('Please fill in all fields.')
-      setLoading(false)
       return
     }
 
-    if (formData.password.length < 8) {
-    setError('Password must be at least 8 characters.')
-    return
-  }
-  if (!/[A-Z]/.test(formData.password)) {
-    setError('Password must contain at least one uppercase letter.')
-    return
-  }
-  if (!/[0-9]/.test(formData.password)) {
-    setError('Password must contain at least one number.')
-    return
-  }
-
-  setLoading(true)
-
-    const data = await registerUser(formData)
-
-    if (data.user) {
-      // registration successful — show verify step
-      // in dev mode the code comes back in the response
-      console.log('Verification code:', data.mockEmailCode)
+    const result = await register(firstName, lastName, email, password)
+    if (result.success) {
       setStep('verify')
-    } else {
-      setError(data.message || 'Registration failed. Please try again.')
     }
-    setLoading(false)
   }
 
   const handleVerify = async (e) => {
     e.preventDefault()
-    setLoading(true)
     setError('')
 
-    const data = await verifyRegistrationCode(formData.email, verifyCode)
-
-    if (data.message === 'Email verified successfully! You can now log in.') {
-      navigate('/login')
-    } else {
-      setError(data.message || 'Invalid code. Please try again.')
+    if (!code) {
+      setError('Please enter the verification code.')
+      return
     }
-    setLoading(false)
+
+    const result = await verify(email, code)
+    if (result.success) {
+      navigate('/login')
+    }
   }
 
   return (
@@ -94,30 +65,49 @@ function RegisterPage() {
               <div className="login-field">
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Full name"
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
+                  placeholder="First name"
+                  autoComplete="given-name"
+                />
+              </div>
+              <div className="login-field">
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={e => setLastName(e.target.value)}
+                  placeholder="Last name"
+                  autoComplete="family-name"
+                />
+              </div>
+              <div className="login-field">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  placeholder="Username"
+                  autoComplete="username"
                 />
               </div>
               <div className="login-field">
                 <input
                   type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   placeholder="Email"
+                  autoComplete="email"
                 />
               </div>
               <div className="login-field">
                 <input
                   type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                   placeholder="Password"
+                  autoComplete="new-password"
                 />
               </div>
+              <p className="login-sub">Min 8 chars, 1 uppercase, 1 number</p>
             </div>
 
             <button
@@ -133,7 +123,8 @@ function RegisterPage() {
             <div className="login-inner">
               <h2>Verify your email</h2>
               <p className="login-sub">
-                Enter the 6-digit code sent to {formData.email}
+                Check your email for a 6-digit code sent to {email}.
+                During testing check your browser console!
               </p>
 
               {error && <p className="login-error">{error}</p>}
@@ -141,9 +132,9 @@ function RegisterPage() {
               <div className="login-field">
                 <input
                   type="text"
-                  value={verifyCode}
-                  onChange={e => setVerifyCode(e.target.value)}
-                  placeholder="6-digit code"
+                  value={code}
+                  onChange={e => setCode(e.target.value)}
+                  placeholder="Enter 6-digit code"
                   maxLength={6}
                 />
               </div>
@@ -156,6 +147,14 @@ function RegisterPage() {
             >
               {loading ? 'Verifying...' : 'Verify Email'}
             </button>
+
+            <p
+              className="login-forgot"
+              style={{ cursor: 'pointer' }}
+              onClick={() => setStep('form')}
+            >
+              ← Back
+            </p>
           </>
         )}
       </div>
