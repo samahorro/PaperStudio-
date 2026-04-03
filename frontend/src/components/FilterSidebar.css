@@ -1,0 +1,59 @@
+.filter-sidebar {
+  width: 110px;
+  flex-shrink: 0;
+  background: #e8e3c7;
+  border-radius: 8px;
+  padding: 16px;
+  align-self: start;
+
+  /* sticks to top when scrolling since navbar is fixed */
+  position: sticky;
+  top: 95px;
+}
+
+.filter-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111;
+}
+
+.filter-section {
+  margin-bottom: 16px;
+}
+
+.filter-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #d0c9a8;
+  padding-bottom: 4px;
+}
+
+.filter-section-header h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #111;
+}
+
+.filter-collapse {
+  font-size: 0.8rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #444;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.filter-option input {
+  accent-color: #5d2f23;
+  cursor: pointer;
+}

@@ -17,33 +17,52 @@ a {
 
 .homepage {
   width: 100%;
+  padding-top: 90px; /* to account for fixed navbar */
 }
-
-/* ─── HERO ─── */
 .home-hero {
-  background: #e8e3c7;
-  padding: 48px 55px 60px;
+  position: relative;
+  height: 500px;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
+  padding: 48px 55px;
+}
+
+/* dark overlay so text is readable over video */
+.home-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 1;
   max-width: 420px;
 }
 
 .hero-content h1 {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 520;
   line-height: 1.2;
   margin-bottom: 16px;
-  color: #111;
+  color: #fff;
 }
 
 .hero-content p {
   font-size: 0.9rem;
-  color: #555;
+  color: #ffffff;
   line-height: 1.6;
   margin-bottom: 28px;
 }
@@ -71,7 +90,6 @@ a {
   flex-shrink: 0;
 }
 
-/* ─── COLLECTION BANNER ─── */
 .home-collection {
   background: #6b7f62;
   padding: 40px 55px;
@@ -165,56 +183,3 @@ a {
   background: #8a9e80;
 }
 
-/* ─── FOOTER ─── */
-.home-footer {
-  background: #e8e3c7;
-  padding: 40px 55px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
-  margin-top: 40px;
-}
-
-.footer-logo {
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-.footer-col h4 {
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.footer-col a {
-  display: block;
-  font-size: 0.8rem;
-  color: #555;
-  margin-bottom: 6px;
-}
-
-.footer-col a:hover {
-  color: #111;
-}
-
-.footer-social {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.footer-social span {
-  width: 28px;
-  height: 28px;
-  background: #2e2e2e;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.footer-bottom {
-  background: #e8e3c7;
-  text-align: center;
-  padding: 12px;
-  font-size: 0.75rem;
-  color: #888;
-}

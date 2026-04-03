@@ -1,6 +1,4 @@
-const BASE_URL = '/api';
-
-// ========== AUTHENTICATION ==========
+const BASE_URL = 'http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/api'
 
 export const registerUser = async (userData) => {
     // userData format: { username, email, password }
@@ -24,14 +22,14 @@ export const loginUser = async (credentials) => {
     return response.json();
 };
 
-// ─── MFA & Registration Confirmations ────────────
+// ─── MFA & Registration Confirmations; changed user-> email verif────────────
 
-export const verifyRegistrationCode = async (username, code) => {
-    console.log("Mocking Registration Code Verification:", { username, code });
+export const verifyRegistrationCode = async (email, code) => {
+    console.log("Mocking Registration Code Verification:", { email, code });
     const response = await fetch(`${BASE_URL}/auth/verify-registration`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, code })
+        body: JSON.stringify({ email, code })
     });
     return response.json();
 };
@@ -106,7 +104,7 @@ export const getCart = async (token) => {
     return response.json();
 };
 
-export const addToCart = async (token, productId, quantity) => {
+export const addToCart = async (token, productId, quantity, color) => {
     console.log("Mocking Add to Cart API Call:", { productId, quantity });
     const response = await fetch(`${BASE_URL}/cart`, {
         method: 'POST',
@@ -114,7 +112,7 @@ export const addToCart = async (token, productId, quantity) => {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ productId, quantity })
+        body: JSON.stringify({ productId, quantity,color })
     });
     return response.json();
 };
@@ -169,6 +167,61 @@ export const getOrderById = async (token, orderId) => {
     console.log("Mocking Get Order By ID API Call:", orderId);
     const response = await fetch(`${BASE_URL}/orders/${orderId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
+    });
+    return response.json();
+};
+
+//== password authentication and Profile===//
+export const updateProfile = async (token, profileData) => {
+    const response = await fetch(`${BASE_URL}/auth/profile`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(profileData)
+    });
+    return response.json();
+};
+
+export const forgotPassword = async (email) => {
+    const response = await fetch(`${BASE_URL}/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+    });
+    return response.json();
+};
+
+export const resetPassword = async (email, code, newPassword) => {
+    const response = await fetch(`${BASE_URL}/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, code, newPassword })
+    });
+    return response.json();
+};
+
+export const validateCoupon = async (token, code) => {
+    const response = await fetch(`${BASE_URL}/coupons/validate`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code })
+    });
+    return response.json();
+};
+
+export const createStripeSession = async (token, orderId) => {
+    const response = await fetch(`${BASE_URL}/payments/create-session`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId })
+    });
+    return response.json();
+};
+
+export const submitContactForm = async (contactData) => {
+    const response = await fetch(`${BASE_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactData)
     });
     return response.json();
 };
