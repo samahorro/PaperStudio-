@@ -15,12 +15,10 @@ function LoginPage({ setCurrentUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
     setError('')
 
-    if(!formData.firstName || !formData.lastName || !formData.username || !formData.email || !formData.password) {
+    if(!formData.email || !formData.password) {
       setError('Please fill in all fields.')
-      setLoading(false)
       return
     }
 
