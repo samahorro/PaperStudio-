@@ -1,0 +1,220 @@
+.admin-page {
+  min-height: 100vh;
+  background: #f4f4f2;
+  padding-bottom: 60px;
+}
+
+.admin-header {
+  background: #e8e3c7;
+  padding: 32px 55px;
+  text-align: center;
+}
+
+.admin-title {
+  font-family: 'Indie Flower', cursive;
+  font-size: 2rem;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+.admin-blob {
+  width: 60px;
+  height: 16px;
+  background: #5d2f23;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.admin-nav {
+  display: flex;
+  gap: 12px;
+  padding: 24px 55px;
+  background: #e8e3c7;
+  border-top: 1px solid #d0c9a8;
+  flex-wrap: wrap;
+}
+
+.admin-nav-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #d0c9a8;
+  background: #fff;
+  color: #111;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-nav-btn:hover { background: #e8e3c7; }
+
+.admin-nav-btn.active {
+  background: #3a3530;
+  color: #fff;
+  border-color: #3a3530;
+}
+
+.admin-nav-btn.logout {
+  margin-left: auto;
+  background: #f4ece9;
+  border-color: #d9b5a8;
+  color: #5d2f23;
+}
+
+.admin-nav-btn.logout:hover {
+  background: #5d2f23;
+  color: #fff;
+}
+
+.admin-section {
+  padding: 40px 55px;
+  max-width: 700px;
+}
+
+.admin-section h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 24px;
+}
+
+.admin-sub {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: -16px;
+  margin-bottom: 20px;
+}
+
+.admin-loading, .admin-empty {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-card {
+  background: #fff;
+  border: 1px solid #e0ddd0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.order-id {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.order-status {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: #e8e3c7;
+  color: #5d2f23;
+  font-weight: 500;
+}
+
+.order-status.delivered {
+  background: #e1f5ee;
+  color: #0f6e56;
+}
+
+.order-address {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-field label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.admin-field input,
+.admin-field textarea {
+  padding: 10px 14px;
+  border: 1px solid #d0c9a8;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #fafaf7;
+  color: #111;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.admin-field input:focus,
+.admin-field textarea:focus { border-color: #5d2f23; }
+
+.admin-field input[type="file"] {
+  padding: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.file-name {
+  font-size: 0.8rem;
+  color: #0f6e56;
+}
+
+.admin-submit-btn {
+  background: #3a3530;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.admin-submit-btn:hover { background: #111; }
+.admin-submit-btn:disabled { background: #888; cursor: not-allowed; }
+
+.admin-submit-btn.delete { background: #a32d2d; }
+.admin-submit-btn.delete:hover { background: #7a1f1f; }
+
+.admin-error {
+  background: #fde8e8;
+  color: #a32d2d;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.admin-success {
+  background: #e1f5ee;
+  color: #0f6e56;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
