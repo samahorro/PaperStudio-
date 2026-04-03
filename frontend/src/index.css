@@ -6,12 +6,13 @@
 }
 
 :root{
-  --font-body: 'IBM Plex Mono', monospace;
-  --font-heading: 'Indie Flower', cursive;
+  --font-body: 'Nord', sans-serif;
+  --font-heading: 'Mont', sans-serif;
 }
 
 body {
   background-color: white;
+  background: #ebebeb;
   color: black;
   font-family: var(--font-body);
 }
