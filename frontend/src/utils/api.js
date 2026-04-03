@@ -1,4 +1,4 @@
-const BASE_URL = 'http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/api'
+const BASE_URL = './api'
 
 export const registerUser = async (userData) => {
     // userData format: { username, email, password }
