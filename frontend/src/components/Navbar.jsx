@@ -1,27 +1,69 @@
-import {NavLink} from 'react-router-dom';
-import './Navbar.css';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import './Navbar.css'
 
-function Navbar(){
-        return(
-            <nav className="navbar">
+function Navbar({currentUser, setCurrentUser}) {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isHome = location.pathname === '/'
+  const isProducts = location.pathname === '/collections'
 
-            {/* Left for grid spacing*/}
-            <div></div>
 
-            {/*Center - Logo n brand*/}
-            <NavLink to="/" className="navbar-logo">
-            <div className="brand-blob"></div>
-            <span className="brand-name">Paper Studio</span>    
-            </NavLink>
+  const handleProfileClick = () => {
+    navigate('/account')
+  }
+const hideNavbar = ['/login', '/register'].includes(location.pathname)
+if (hideNavbar) return null
 
-            {/*Right - icon Links*/}
-            <div className="navbar-icons">
-                <NavLink to="/search" className="icon-link">🔍</NavLink>
-                <NavLink to="/cart" className="icon-link">🛒</NavLink>
-                <NavLink to="/profile" className="icon-link">👤</NavLink>
+  return (
+    <nav className={`navbar ${isHome ? 'navbar-home' : 'navbar-other'}`}>
+
+      {/* only show empty left div on home for grid spacing */}
+      {isHome && <div></div>}
+
+      {/* CENTER on home, LEFT on other pages */}
+      {isHome &&(
+      <div className="navbar-center">
+      <NavLink to="/" className="navbar-brand">
+        <div className="brand-blob"></div>
+        <span className="brand-name">PaperStudio</span>
+      </NavLink>
+
+       {/*collection links for home*/}
+    
+    <div className="collection-links">
+        <NavLink to="/collections?category=pens" className="collection-link">Pens</NavLink>
+        <NavLink to="/collections?category=pencils" className="collection-link">Pencils</NavLink>
+        <NavLink to="/collections?category=notebooks" className="collection-link">Notebooks</NavLink>
+        <NavLink to="/collections?category=sketchbooks" className="collection-link">Sketchbooks</NavLink>
+        <NavLink to="/collections?category=calendars" className="collection-link">Calendars</NavLink>
+        <NavLink to="/collections?category=cases" className="collection-link">Cases</NavLink>
+    </div>
+    </div>
+    )}
+    {!isHome && (
+        <div className="navbar-other-left">
+          <NavLink to="/" className="navbar-brand">
+            <span className="brand-name brand-name-small">PaperStudio</span>
+          </NavLink>
+        </div>
+      )}
+
+        {isProducts && (
+            <div className="collection-page">
+                <NavLink to="/collections" className="collection-link">Collections</NavLink>
             </div>
-                
-                </nav>
-        )
-    }
-    export default Navbar;
+        )}
+        
+
+      {/* RIGHT — icons always */}
+      <div className="navbar-icons">
+        <NavLink to="/search">🔍</NavLink>
+        <NavLink to="/cart">🛒</NavLink>
+        <NavLink to={currentUser ? '/account' : '/login'}>👤</NavLink>
+      </div>
+
+    </nav>
+  )
+}
+
+export default Navbar

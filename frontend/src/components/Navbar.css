@@ -1,32 +1,97 @@
+/* ─── BASE ─── */
 .navbar {
+  padding: 17px 55px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(210, 210, 210, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+/* ─── HOME — 3 col grid ─── */
+.navbar-home {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 16px 55px;
-  background: #e8e3c7;
 }
 
+/* ─── OTHER PAGES — 3 col grid ─── */
+.navbar-other {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+/* left col */
+.navbar-other-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* center col */
+.navbar-other-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ─── BRAND ─── */
 .navbar-brand {
-  text-align: center;
   text-decoration: none;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.brand-name {
+  font-size: 2rem;
+  font-weight: 540;
+  letter-spacing: 0.01em;
+  font-family: 'Nord', sans-serif;
   color: #111;
 }
 
-.brand-blob {
-  width: 60px;
-  height: 16px;
-  background: #5d2f23;
-  border-radius: 50%;
-  margin: 0 auto 6px;
+
+/* ─── CENTER (home only) ─── */
+.navbar-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
-.brand-name {
-  font-size: 1.6rem;
+/* ─── COLLECTION LINKS ─── */
+.collection-links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.collection-link {
+  font-size: 0.84rem;
+  color: #000000;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.collection-link:hover {
+  text-decoration: underline;
+}
+
+.active-page {
+  font-size: 1.2rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  font-family: 'Indie Flower', cursive;
+  color: #111;
+  text-decoration: underline;
 }
 
+/* ─── ICONS ─── */
 .navbar-icons {
   display: flex;
   gap: 16px;
@@ -37,4 +102,9 @@
 
 .navbar-icons a {
   text-decoration: none;
+}
+
+.icon-btn {
+  cursor: pointer;
+  font-size: 1rem;
 }
