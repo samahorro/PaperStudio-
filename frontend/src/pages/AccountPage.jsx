@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { getUserOrders } from '../utils/api'
 import LoadingSpinner from '../components/LoadingSpinner'
 import './AccountPage.css'
+import {Icon} from '@iconify/react'
 
 function AccountPage() {
   const navigate = useNavigate()
