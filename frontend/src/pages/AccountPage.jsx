@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { getUserOrders } from '../utils/api'
@@ -17,6 +17,8 @@ useEffect(() => {
     navigate('/login')
   }
 }, [currentUser])
+
+if (!currentUser) return null
 
   const handleLogout = () => {
     logout()
