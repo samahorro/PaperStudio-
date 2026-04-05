@@ -13,7 +13,7 @@ import ProductDetailPage from './pages/ProductDetailPage'
 import AdminPage from './pages/AdminDashboard'
 import ContactPage from './pages/ContactPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
-
+import { Icon } from '@iconify/react'
 
 {/*using auth to manage user state*/}
 function AppContent() {

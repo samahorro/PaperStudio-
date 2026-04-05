@@ -56,23 +56,21 @@ if (!currentUser) return null
           <span className="account-tag">Your Account</span>
 
           <button className="account-item" onClick={handleOrderHistory}>
-            <span className="account-icon">📋</span>
+            <span className="account-icon">icon-park-solid:transaction-order</span>
             Order History
           </button>
           <button className="account-item" onClick={() => setActiveSection('settings')}>
-            <span className="account-icon">⚙️</span>
+            <span className="account-icon">icon-park-solid:setting-two</span>
             Settings
           </button>
-          <NavLink to="/payment" className="account-item">
-            <span className="account-icon">💳</span>
-            Payment
-          </NavLink>
+          
+         
           <NavLink to="/contact" className="account-item">
-            <span className="account-icon">💬</span>
+            <span className="account-icon">icon-park-solid:mail</span>
             Need help? Contact us
           </NavLink>
           <button className="account-logout" onClick={handleLogout}>
-            <span className="account-icon">↩️</span>
+            <span className="account-icon">↩icon-park-solid:back</span>
             Log out
           </button>
         </div>
@@ -114,11 +112,11 @@ if (!currentUser) return null
           <h3>Settings</h3>
           <div className="settings-options">
             <NavLink to="/forgot-password" className="settings-item">
-              <span className="account-icon">🔑</span>
+              <span className="account-icon">icon-park-solid:key-one</span>
               Forgot Password
             </NavLink>
             <NavLink to="/change-password" className="settings-item">
-              <span className="account-icon">🔒</span>
+              <span className="account-icon">icon-park-solid:electronic-locks-close</span>
               Change Password
             </NavLink>
           </div>
