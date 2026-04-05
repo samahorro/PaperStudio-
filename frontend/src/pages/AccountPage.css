@@ -22,8 +22,6 @@
   position: relative;
   z-index: 2;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-
-  /* speech bubble tail */
   border-bottom-left-radius: 4px;
 }
 
@@ -40,14 +38,13 @@
 }
 
 .profile-title {
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Nord', sans-serif;
   font-size: 1.4rem;
   font-weight: 400;
   color: #111;
   margin-bottom: 8px;
 }
 
-/* CSS avatar */
 .profile-avatar {
   margin: 8px 0;
 }
@@ -74,7 +71,7 @@
 }
 
 .profile-name {
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Nord', sans-serif;
   font-size: 1.3rem;
   font-weight: 400;
   color: #111;
@@ -82,7 +79,7 @@
 }
 
 .profile-email {
-  font-family: monospace;
+  font-family: 'Nord', sans-serif;
   font-size: 0.8rem;
   color: #555;
 }
@@ -118,6 +115,7 @@
   display: inline-block;
 }
 
+/* ─── acc items*/
 .account-item {
   display: flex;
   align-items: center;
@@ -129,6 +127,14 @@
   text-decoration: none;
   border-radius: 8px;
   transition: background 0.15s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .account-item:last-of-type {
@@ -143,6 +149,7 @@
   font-size: 1rem;
 }
 
+/*acc logout*/
 .account-logout {
   display: flex;
   align-items: center;
@@ -163,7 +170,100 @@
   background: rgba(0,0,0,0.04);
 }
 
-/* ─── LOGGED OUT ─── */
+/* ─── order and settings */
+.account-section {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 20px;
+  background: #f0f0f0;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.account-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 16px;
+}
+
+.account-empty {
+  font-size: 0.85rem;
+  color: #888;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ─── ORDERS ─── */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #444;
+}
+
+.order-id {
+  font-family: 'Nord', sans-serif;
+  color: #888;
+}
+
+.order-badge {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.order-badge.pending { background: #faeeda; color: #854f0b; }
+.order-badge.delivered { background: #e1f5ee; color: #0f6e56; }
+.order-badge.processing { background: #e6f1fb; color: #185fa5; }
+.order-badge.cancelled { background: #fde8e8; color: #a32d2d; }
+
+.order-address {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* ─── SETTINGS ─── */
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  font-size: 0.9rem;
+  color: #111;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.settings-item:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+/* ─── LOGGED OUT */
 .account-loggedout {
   display: flex;
   flex-direction: column;
@@ -184,9 +284,7 @@
   transition: background 0.2s;
 }
 
-.account-create-btn:hover {
-  background: #111;
-}
+.account-create-btn:hover { background: #111; }
 
 .account-login-btn {
   background: #e0e0e0;
@@ -199,6 +297,4 @@
   transition: background 0.2s;
 }
 
-.account-login-btn:hover {
-  background: #d0d0d0;
-}
+.account-login-btn:hover { background: #d0d0d0; }

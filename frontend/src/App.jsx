@@ -12,6 +12,8 @@ import CartPage from './pages/CartPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import AdminPage from './pages/AdminDashboard'
 import ContactPage from './pages/ContactPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+
 
 {/*using auth to manage user state*/}
 function AppContent() {
@@ -22,6 +24,7 @@ function AppContent() {
     <CartProvider>
       <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Routes>
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/collections" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailPage currentUser={currentUser} />} />

@@ -1,20 +1,35 @@
+import { useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { getUserOrders } from '../utils/api'
+import LoadingSpinner from '../components/LoadingSpinner'
 import './AccountPage.css'
 
-function AccountPage({ currentUser, setCurrentUser }) {
+function AccountPage() {
   const navigate = useNavigate()
+  const { currentUser, logout } = useAuth()
+  const [activeSection, setActiveSection] = useState(null)
+  const [orders, setOrders] = useState([])
+  const [ordersLoading, setOrdersLoading] = useState(false)
+
+useEffect(() => {
+  if (!currentUser) {
+    navigate('/login')
+  }
+}, [currentUser])
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    setCurrentUser(null)
+    logout()
     navigate('/')
   }
 
-  // if not logged in, redirect to login
-  if (!currentUser) {
-    navigate('/login')
-    return null
+  const handleOrderHistory = async () => {
+    setActiveSection('orders')
+    setOrdersLoading(true)
+    const token = localStorage.getItem('token')
+    const data = await getUserOrders(token)
+    setOrders(Array.isArray(data) ? data : [])
+    setOrdersLoading(false)
   }
 
   return (
@@ -38,14 +53,14 @@ function AccountPage({ currentUser, setCurrentUser }) {
         <div className="account-card">
           <span className="account-tag">Your Account</span>
 
-          <NavLink to="/orders" className="account-item">
+          <button className="account-item" onClick={handleOrderHistory}>
             <span className="account-icon">📋</span>
             Order History
-          </NavLink>
-          <NavLink to="/settings" className="account-item">
+          </button>
+          <button className="account-item" onClick={() => setActiveSection('settings')}>
             <span className="account-icon">⚙️</span>
             Settings
-          </NavLink>
+          </button>
           <NavLink to="/payment" className="account-item">
             <span className="account-icon">💳</span>
             Payment
@@ -54,13 +69,59 @@ function AccountPage({ currentUser, setCurrentUser }) {
             <span className="account-icon">💬</span>
             Need help? Contact us
           </NavLink>
-
           <button className="account-logout" onClick={handleLogout}>
             <span className="account-icon">↩️</span>
             Log out
           </button>
         </div>
       </div>
+
+      {/* ORDER HISTORY SECTION */}
+      {activeSection === 'orders' && (
+        <div className="account-section">
+          <h3>Order History</h3>
+          {ordersLoading ? (
+            <LoadingSpinner />
+          ) : orders.length === 0 ? (
+            <p className="account-empty">No orders yet.</p>
+          ) : (
+            <div className="orders-list">
+              {orders.map(order => (
+                <div key={order.id} className="order-card">
+                  <div className="order-row">
+                    <span className="order-id">#{order.id.slice(0, 8)}</span>
+                    <span className={`order-badge ${order.status}`}>{order.status}</span>
+                  </div>
+                  <div className="order-row">
+                    <span>Total: <strong>${order.total}</strong></span>
+                    <span>{order.items?.length || 0} items</span>
+                  </div>
+                  <div className="order-row">
+                    <span className="order-address">{order.shippingAddress}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* SETTINGS SECTION */}
+      {activeSection === 'settings' && (
+        <div className="account-section">
+          <h3>Settings</h3>
+          <div className="settings-options">
+            <NavLink to="/forgot-password" className="settings-item">
+              <span className="account-icon">🔑</span>
+              Forgot Password
+            </NavLink>
+            <NavLink to="/change-password" className="settings-item">
+              <span className="account-icon">🔒</span>
+              Change Password
+            </NavLink>
+          </div>
+        </div>
+      )}
 
     </div>
   )

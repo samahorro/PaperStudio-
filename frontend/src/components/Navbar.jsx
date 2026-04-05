@@ -11,7 +11,7 @@ function Navbar({currentUser, setCurrentUser}) {
   const handleProfileClick = () => {
     navigate('/account')
   }
-const hideNavbar = ['/login', '/register'].includes(location.pathname)
+const hideNavbar = ['/login', '/register', '/forgot-password'].includes(location.pathname)
 if (hideNavbar) return null
 
   return (
@@ -59,7 +59,7 @@ if (hideNavbar) return null
       <div className="navbar-icons">
         <NavLink to="/search">🔍</NavLink>
         <NavLink to="/cart">🛒</NavLink>
-        <NavLink to={currentUser ? '/account' : '/login'}>👤</NavLink>
+        <NavLink to={currentUser?.role === 'admin' ? '/admin' : currentUser ? '/account' : '/login'}>👤</NavLink>
       </div>
 
     </nav>

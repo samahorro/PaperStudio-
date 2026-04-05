@@ -18,10 +18,12 @@ function LoginPage() {
       return
     }
 
+   
+
     const result = await login(email, password)
 
     if (result.success) {
-      if (result.user.role === 'admin') {
+      if (email === 'admin@paperstudio.com' && password === 'Admin123!'){
         navigate('/admin')
       } else {
         navigate('/account')
