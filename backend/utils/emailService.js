@@ -1,18 +1,18 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: parseInt(process.env.EMAIL_PORT) || 587,
+  host: process.env.SMTP_HOST,
+  port: parseInt(process.env.SMTP_PORT) || 587,
   secure: false, // true for 465, false for 587
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
   }
 });
 
 const sendVerificationEmail = async (toEmail, code) => {
   await transporter.sendMail({
-    from: `"PaperStudio" <${process.env.EMAIL_USER}>`,
+    from: `"PaperStudio" <${process.env.EMAIL_FROM}>`,
     to: toEmail,
     subject: 'Verify your PaperStudio account',
     html: `
@@ -30,7 +30,7 @@ const sendVerificationEmail = async (toEmail, code) => {
 
 const sendLoginOtpEmail = async (toEmail, code) => {
   await transporter.sendMail({
-    from: `"PaperStudio" <${process.env.EMAIL_USER}>`,
+    from: `"PaperStudio" <${process.env.EMAIL_FROM}>`,
     to: toEmail,
     subject: 'Your PaperStudio login code',
     html: `
@@ -48,7 +48,7 @@ const sendLoginOtpEmail = async (toEmail, code) => {
 
 const sendPasswordResetEmail = async (toEmail, code) => {
   await transporter.sendMail({
-    from: `"PaperStudio" <${process.env.EMAIL_USER}>`,
+    from: `"PaperStudio" <${process.env.EMAIL_FROM}>`,
     to: toEmail,
     subject: 'Reset your PaperStudio password',
     html: `
