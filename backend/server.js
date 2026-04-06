@@ -122,8 +122,8 @@ const startServer = async () => {
     if (connected) {
       console.log('✅ Database connection established');
       
-      // Sync models (alter in development to add new columns without wiping data)
-      await syncDatabase({ alter: process.env.NODE_ENV === 'development' });
+      // Sync models (alter: true adds new columns without wiping data)
+      await syncDatabase({ alter: true });
     } else {
       console.log('⚠️ Starting without database connection');
     }
