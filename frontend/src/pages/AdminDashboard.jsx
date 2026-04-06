@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { createProduct, getUserOrders } from '../utils/api'
+import { createProduct, getUserOrders, deleteProduct } from '../utils/api'
 import { useAuth } from '../context/AuthContext'
 import './AdminDashboard.css'
 
@@ -274,10 +274,22 @@ function AdminDashboard() {
               <label>Product ID *</label>
               <input type="text" value={deleteId} onChange={e => setDeleteId(e.target.value)} placeholder="e.g. abc-123-xyz" />
             </div>
-            <button className="admin-submit-btn delete" onClick={() => {
+            <button className="admin-submit-btn delete" onClick={async () => {
               if (!deleteId) { setDeleteError('Please enter a product ID.'); return }
-              setDeleteSuccess('Product deleted successfully!')
-              setDeleteId('')
+              setDeleteError('')
+              setDeleteSuccess('')
+              try {
+                const token = localStorage.getItem('token')
+                const data = await deleteProduct(token, deleteId.trim())
+                if (data.message && data.message.toLowerCase().includes('deleted')) {
+                  setDeleteSuccess('✅ Product deleted successfully!')
+                  setDeleteId('')
+                } else {
+                  setDeleteError(data.message || 'Failed to delete product.')
+                }
+              } catch (err) {
+                setDeleteError('Error deleting product. Please try again.')
+              }
             }}>
               Delete Product
             </button>

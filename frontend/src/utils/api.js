@@ -93,6 +93,14 @@ export const getProductById = async (id) => {
     return response.json();
 };
 
+export const deleteProduct = async (token, productId) => {
+    const response = await fetch(`${BASE_URL}/products/${productId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    return response.json();
+};
+
 
 // ========== CART ==========
 

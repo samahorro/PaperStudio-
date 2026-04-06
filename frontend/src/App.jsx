@@ -13,6 +13,7 @@ import ProductDetailPage from './pages/ProductDetailPage'
 import AdminPage from './pages/AdminDashboard'
 import ContactPage from './pages/ContactPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import MFAPage from './pages/MFAPage'
 import { Icon } from '@iconify/react'
 
 {/*using auth to manage user state*/}
@@ -32,6 +33,7 @@ function AppContent() {
         <Route path="/account" element={<AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/mfa" element={<MFAPage />} />
         <Route path="/admin" element={<AdminPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>

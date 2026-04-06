@@ -16,11 +16,11 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
-  const login = async (email, password) => {
+  const login = async (email, password, mfaCode = null) => {
     setLoading(true)
     setError('')
     try {
-      const data = await loginUser({ email, password })
+      const data = await loginUser({ email, password, ...(mfaCode && { mfaCode }) })
       if (data.token) {
         localStorage.setItem('token', data.token)
         localStorage.setItem('user', JSON.stringify(data.user))
