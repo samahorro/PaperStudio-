@@ -1,6 +1,6 @@
 require('dotenv').config();
-const sequelize = require('./config/db');
-const { connectDB, syncDatabase } = require('./models');
+const { sequelize, connectDB } = require('./config/db');
+const { syncDatabase } = require('./models');
 const User = require('./models/User');
 const Product = require('./models/Product');
 const Coupon = require('./models/Coupon');
@@ -83,7 +83,7 @@ const seedDatabase = async () => {
         // Pens
         {
           name: 'Fine Point Gel Pen (5-Pack)',
-          description: 'Ultra-smooth 0.5mm gel pens in assorted colors. Quick-drying ink that won't smudge.',
+          description: "Ultra-smooth 0.5mm gel pens in assorted colors. Quick-drying ink that won't smudge.",
           price: 12.99,
           category: 'pens',
           color: 'Assorted',
