@@ -93,12 +93,16 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    if (!user.isEmailVerified) {
+    // Admin accounts skip email verification and MFA
+    if (user.role !== 'admin' && !user.isEmailVerified) {
       return res.status(403).json({ message: "Please verify your email before logging in" });
     }
 
-    // Email-based MFA: if no mfaCode provided, generate and email an OTP
-    if (!mfaCode) {
+    // Admin accounts bypass MFA — log in directly
+    if (user.role === 'admin') {
+      // Skip MFA, go straight to token
+    } else if (!mfaCode) {
+      // Email-based MFA for regular users: generate and email an OTP
       const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
       user.loginOtpCode = otpCode;
       user.loginOtpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
@@ -114,20 +118,20 @@ const loginUser = async (req, res) => {
         message: "A verification code has been sent to your email.",
         requiresMfa: true
       });
-    }
+    } else {
+      // Verify the email OTP
+      if (!user.loginOtpCode || user.loginOtpCode !== mfaCode) {
+        return res.status(401).json({ message: "Invalid verification code" });
+      }
+      if (!user.loginOtpExpires || new Date() > user.loginOtpExpires) {
+        return res.status(401).json({ message: "Verification code has expired. Please log in again." });
+      }
 
-    // Verify the email OTP
-    if (!user.loginOtpCode || user.loginOtpCode !== mfaCode) {
-      return res.status(401).json({ message: "Invalid verification code" });
+      // Clear OTP after successful use
+      user.loginOtpCode = null;
+      user.loginOtpExpires = null;
+      await user.save();
     }
-    if (!user.loginOtpExpires || new Date() > user.loginOtpExpires) {
-      return res.status(401).json({ message: "Verification code has expired. Please log in again." });
-    }
-
-    // Clear OTP after successful use
-    user.loginOtpCode = null;
-    user.loginOtpExpires = null;
-    await user.save();
 
     // Login fully authenticated!
     const token = jwt.sign(
