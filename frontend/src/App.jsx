@@ -12,6 +12,7 @@ import CartPage from './pages/CartPage'
 import ProductDetailPage from './pages/ProductDetailPage'
 import AdminPage from './pages/AdminDashboard'
 import ContactPage from './pages/ContactPage'
+import AboutPage from './pages/AboutPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import MFAPage from './pages/MFAPage'
 import { Icon } from '@iconify/react'
@@ -36,6 +37,7 @@ function AppContent() {
         <Route path="/mfa" element={<MFAPage />} />
         <Route path="/admin" element={<AdminPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
       <Footer />
     </CartProvider>
