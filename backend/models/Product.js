@@ -43,6 +43,18 @@ const Product = sequelize.define('Product', {
   imageUrl: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  hoverImageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  isNewArrival: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  colorsCount: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   timestamps: true,
