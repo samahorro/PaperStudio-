@@ -27,8 +27,10 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
-  border-bottom: 1px solid #d0c9a8;
+  border-bottom: 1px solid #747474;
   padding-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .filter-section-header h4 {
@@ -39,7 +41,7 @@
 
 .filter-collapse {
   font-size: 0.8rem;
-  color: #555;
+  color: #a1a1a1;
   cursor: pointer;
 }
 
@@ -54,6 +56,6 @@
 }
 
 .filter-option input {
-  accent-color: #5d2f23;
+  accent-color: #27211f;
   cursor: pointer;
 }
