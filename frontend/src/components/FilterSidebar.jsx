@@ -1,4 +1,6 @@
 import './FilterSidebar.css'
+import {useState} from 'react'
+
 
 function FilterSidebar({ filters, setFilters }) {
 
@@ -6,6 +8,14 @@ const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils'
   const colors = ['Blue', 'Brown', 'Red', 'Green', 'Grey', 'Orange', 'Yellow', 'Purple', 'Pink', 'White', 'Black']
   const priceRanges = ['Under $10', '$10 - $20', '$20 - $50', 'Over $50']
 
+
+  const [collapsed, setCollapsed] = useState({
+    category: false,
+    color: false,
+    inStock: false,
+    price: false
+  })
+  
   const handleProductType = (type) => {
     setFilters(prev => ({
       ...prev,

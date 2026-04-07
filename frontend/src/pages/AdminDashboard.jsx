@@ -77,7 +77,7 @@ function AdminDashboard() {
     const data = await createProduct(token, formData)
 
     if (data.id || data.product) {
-      setFormSuccess('✅ Product added successfully!')
+      setFormSuccess('Product added successfully!')
       setProductForm({ name: '', price: '', stock: '', description: '', color: '', category: '' })
       setImageFile(null)
       setHoverImageFile(null)
@@ -99,39 +99,39 @@ function AdminDashboard() {
       {/* HEADER */}
       <div className="admin-header">
         <div className="admin-header-left">
-          <p className="admin-greeting">Hi, welcome back 👋</p>
+          <p className="admin-greeting">Hi, welcome back <Icon icon = "streamline:smiley-cute-remix" /></p>
           <h1 className="admin-title">Admin Dashboard</h1>
         </div>
         <button className="admin-logout-btn" onClick={handleLogout}>
-          ↩️ Log Out
+          <Icon icon="mingcute:back-2-fill" /> Log Out
         </button>
       </div>
 
       {/* STATS CARDS */}
       <div className="admin-stats">
         <div className="stat-card">
-          <span className="stat-icon">📦</span>
+          <span className="stat-icon"><Icon icon = "mynaui:package-solid" /></span>
           <div>
             <p className="stat-number">{totalOrders}</p>
             <p className="stat-label">Total Orders</p>
           </div>
         </div>
         <div className="stat-card">
-          <span className="stat-icon">⏳</span>
+          <span className="stat-icon"><Icon icon = "simple-icons:stagetimer" /></span>
           <div>
             <p className="stat-number">{pendingOrders}</p>
             <p className="stat-label">Pending Orders</p>
           </div>
         </div>
         <div className="stat-card">
-          <span className="stat-icon">✅</span>
+          <span className="stat-icon"><Icon icon = "mdi:receipt-text-pending" /></span>
           <div>
             <p className="stat-number">{deliveredOrders}</p>
             <p className="stat-label">Delivered</p>
           </div>
         </div>
         <div className="stat-card dark">
-          <span className="stat-icon">💰</span>
+          <span className="stat-icon"><Icon icon = "mingcute:pig-money-line" /></span>
           <div>
             <p className="stat-number">${totalRevenue}</p>
             <p className="stat-label">Total Revenue</p>
@@ -142,13 +142,13 @@ function AdminDashboard() {
       {/* NAV BUTTONS */}
       <div className="admin-nav">
         <button className={`admin-nav-btn ${activeSection === 'orders' ? 'active' : ''}`} onClick={() => setActiveSection('orders')}>
-          📋 Customer Orders
+          <Icon icon = "icon-park-solid:address-book" /> Customer Orders
         </button>
         <button className={`admin-nav-btn ${activeSection === 'add' ? 'active' : ''}`} onClick={() => setActiveSection('add')}>
-          ➕ Add Product
+          <Icon icon = "material-symbols-light:box-add-sharp" /> Add Product
         </button>
         <button className={`admin-nav-btn ${activeSection === 'delete' ? 'active' : ''}`} onClick={() => setActiveSection('delete')}>
-          🗑️ Delete Product
+          <Icon icon = "fa7-solid:trash-arrow-up" /> Delete Product
         </button>
       </div>
 
@@ -246,12 +246,12 @@ function AdminDashboard() {
               <div className="admin-field">
                 <label>Product Image *</label>
                 <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files[0])} />
-                {imageFile && <p className="file-name">✅ {imageFile.name}</p>}
+                {imageFile && <p className="file-name"><Icon icon="line-md:check-all" /> {imageFile.name}</p>}
               </div>
               <div className="admin-field">
                 <label>Hover Image (optional)</label>
                 <input type="file" accept="image/*" onChange={e => setHoverImageFile(e.target.files[0])} />
-                {hoverImageFile && <p className="file-name">✅ {hoverImageFile.name}</p>}
+                {hoverImageFile && <p className="file-name"><Icon icon="line-md:check-all" /> {hoverImageFile.name}</p>}
               </div>
             </div>
 

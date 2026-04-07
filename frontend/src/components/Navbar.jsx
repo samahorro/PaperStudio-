@@ -58,8 +58,8 @@ if (hideNavbar) return null
 
       {/* RIGHT — icons always */}
       <div className="navbar-icons">
-        <NavLink to="/search"> <Icon icon = "mingcute:search-2-fill" /> </NavLink>
-        <NavLink to ="/cart"> <Icon icon = "mingcute:shopping-cart-2-fill" /> </NavLink>
+        <NavLink to="/search"> <Icon icon = "wpf:search" /> </NavLink>
+        <NavLink to ="/cart"> <Icon icon = "bitcoin-icons:cart-filled" /> </NavLink>
         <NavLink to={currentUser?.role === 'admin' ? '/admin' : currentUser ? '/account' : '/login'}> <Icon icon = "fluent:person-28-filled" /> </NavLink>
       </div>
 
