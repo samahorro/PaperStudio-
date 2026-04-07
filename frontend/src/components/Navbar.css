@@ -68,13 +68,13 @@
 /* ─── COLLECTION LINKS ─── */
 .collection-links {
   display: flex;
-  gap: 16px;
+  gap: 30px;
   justify-content: center;
   margin-top: 4px;
 }
 
 .collection-link {
-  font-size: 0.84rem;
+  font-size: 0.94rem;
   color: #000000;
   text-decoration: none;
   white-space: nowrap;
