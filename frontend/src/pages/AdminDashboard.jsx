@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { createProduct, getAllProducts, updateProduct, getUserOrders, deleteProduct } from '../utils/api'
 import { useAuth } from '../context/AuthContext'
 import './AdminDashboard.css'
+import {Icon} from '@iconify/react'
 
 const EMPTY_FORM = {
   name: '', price: '', stock: '', description: '', color: '', category: '', collectionName: 'None', isNewArrival: false
