@@ -95,7 +95,7 @@ a {
   padding: 32px 24px;
   margin: 40px 0;
   border-radius: 12px;
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 32px auto;
 }
 
@@ -176,8 +176,8 @@ a {
 
 /* ─── PRODUCT SECTIONS ─── */
 .home-section {
-  padding: 24px 40px;
-  max-width: 1200px;
+  padding: 24px 24px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
