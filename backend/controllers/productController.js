@@ -21,10 +21,11 @@ const s3 = new S3Client(s3Config);
 
 const getAllProducts = async (req, res) => {
   try {
-    const { category, color, inStock, minPrice, maxPrice, search } = req.query;
+    const { category, color, inStock, minPrice, maxPrice, search, collectionName } = req.query;
     const where = {};
 
     if (category) where.category = category;
+    if (collectionName) where.collectionName = collectionName;
     if (color) where.color = { [Op.iLike]: `%${color}%` };
     if (inStock !== undefined) where.inStock = inStock === 'true';
 
@@ -66,27 +67,33 @@ const getProductById = async (req, res) => {
 
 const uploadProductAndImage = async (req, res) => {
   try {
-    const { name, description, price, category, color, stock } = req.body;
+    const { name, description, price, category, color, stock, isNewArrival, collectionName } = req.body;
     let imageUrl = null;
+    let hoverImageUrl = null;
 
-    if (req.file) {
+    if (req.files) {
       const BUCKET_NAME = process.env.S3_BUCKET_NAME;
-      if (!BUCKET_NAME) {
+      if (!BUCKET_NAME && (req.files['image'] || req.files['hoverImage'])) {
         return res.status(500).json({ message: "S3_BUCKET_NAME environment variable is missing!" });
       }
 
-      const fileExt = req.file.originalname.split('.').pop();
-      const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`;
+      if (req.files['image']) {
+        const file = req.files['image'][0];
+        const fileExt = file.originalname.split('.').pop();
+        const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`;
+        const params = { Bucket: BUCKET_NAME, Key: `products/${uniqueFilename}`, Body: file.buffer, ContentType: file.mimetype };
+        await s3.send(new PutObjectCommand(params));
+        imageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/products/${uniqueFilename}`;
+      }
 
-      const params = {
-        Bucket: BUCKET_NAME,
-        Key: `products/${uniqueFilename}`,
-        Body: req.file.buffer,
-        ContentType: req.file.mimetype,
-      };
-
-      await s3.send(new PutObjectCommand(params));
-      imageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/products/${uniqueFilename}`;
+      if (req.files['hoverImage']) {
+        const file = req.files['hoverImage'][0];
+        const fileExt = file.originalname.split('.').pop();
+        const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`;
+        const params = { Bucket: BUCKET_NAME, Key: `products/${uniqueFilename}`, Body: file.buffer, ContentType: file.mimetype };
+        await s3.send(new PutObjectCommand(params));
+        hoverImageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/products/${uniqueFilename}`;
+      }
     }
 
     const newProduct = await Product.create({
@@ -96,7 +103,10 @@ const uploadProductAndImage = async (req, res) => {
       category: category || 'notebooks',
       color: color || null,
       stock: stock ? parseInt(stock) : 0,
-      imageUrl
+      imageUrl,
+      hoverImageUrl,
+      isNewArrival: isNewArrival === 'true' || isNewArrival === true,
+      collectionName: collectionName || 'None'
     });
 
     res.status(201).json({
@@ -118,29 +128,36 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    const allowedFields = ['name', 'description', 'price', 'category', 'color', 'stock', 'imageUrl'];
+    const allowedFields = ['name', 'description', 'price', 'category', 'color', 'stock', 'imageUrl', 'hoverImageUrl', 'isNewArrival', 'collectionName'];
     for (const field of allowedFields) {
       if (req.body[field] !== undefined) {
-        product[field] = field === 'price' ? parseFloat(req.body[field])
-          : field === 'stock' ? parseInt(req.body[field])
-          : req.body[field];
+         if (field === 'price') product[field] = parseFloat(req.body[field]);
+         else if (field === 'stock') product[field] = parseInt(req.body[field]);
+         else if (field === 'isNewArrival') product[field] = req.body[field] === 'true' || req.body[field] === true;
+         else product[field] = req.body[field];
       }
     }
 
-    // Handle new image upload if provided
-    if (req.file) {
+    // Handle new image uploads if provided
+    if (req.files) {
       const BUCKET_NAME = process.env.S3_BUCKET_NAME;
       if (BUCKET_NAME) {
-        const fileExt = req.file.originalname.split('.').pop();
-        const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`;
-        const params = {
-          Bucket: BUCKET_NAME,
-          Key: `products/${uniqueFilename}`,
-          Body: req.file.buffer,
-          ContentType: req.file.mimetype,
-        };
-        await s3.send(new PutObjectCommand(params));
-        product.imageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/products/${uniqueFilename}`;
+        if (req.files['image']) {
+          const file = req.files['image'][0];
+          const fileExt = file.originalname.split('.').pop();
+          const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`;
+          const params = { Bucket: BUCKET_NAME, Key: `products/${uniqueFilename}`, Body: file.buffer, ContentType: file.mimetype };
+          await s3.send(new PutObjectCommand(params));
+          product.imageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/products/${uniqueFilename}`;
+        }
+        if (req.files['hoverImage']) {
+          const file = req.files['hoverImage'][0];
+          const fileExt = file.originalname.split('.').pop();
+          const uniqueFilename = `${crypto.randomUUID()}.${fileExt}`;
+          const params = { Bucket: BUCKET_NAME, Key: `products/${uniqueFilename}`, Body: file.buffer, ContentType: file.mimetype };
+          await s3.send(new PutObjectCommand(params));
+          product.hoverImageUrl = `https://${BUCKET_NAME}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com/products/${uniqueFilename}`;
+        }
       }
     }
 

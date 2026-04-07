@@ -1,0 +1,179 @@
+----------------------------------------
+/var/log/eb-engine.log
+----------------------------------------
+2026/03/12 06:04:42.667502 [INFO] stop X-Ray ...
+2026/03/12 06:04:42.667511 [INFO] Running command: systemctl show -p PartOf xray.service
+2026/03/12 06:04:42.682682 [WARN] stopProcess Warning: process xray is not registered 
+2026/03/12 06:04:42.682707 [INFO] Running command: systemctl stop xray.service
+2026/03/12 06:04:42.699085 [INFO] Executing instruction: stop proxy
+2026/03/12 06:04:42.699125 [INFO] Running command: systemctl show -p PartOf httpd.service
+2026/03/12 06:04:42.714670 [WARN] deregisterProcess Warning: process httpd is not registered, skipping...
+
+2026/03/12 06:04:42.714697 [INFO] Running command: systemctl show -p PartOf nginx.service
+2026/03/12 06:04:42.726537 [INFO] Running command: systemctl is-active nginx.service
+2026/03/12 06:04:42.734848 [INFO] Running command: systemctl show -p PartOf nginx.service
+2026/03/12 06:04:42.744218 [INFO] Running command: systemctl stop nginx.service
+2026/03/12 06:04:47.912124 [INFO] Running command: systemctl disable nginx.service
+2026/03/12 06:04:48.161833 [INFO] Running command: systemctl daemon-reload
+2026/03/12 06:04:48.405481 [INFO] Running command: systemctl reset-failed
+2026/03/12 06:04:48.414329 [INFO] Executing instruction: FlipApplication
+2026/03/12 06:04:48.414406 [INFO] Fetching environment variables...
+2026/03/12 06:04:48.414686 [INFO] Purge old process...
+2026/03/12 06:04:48.414718 [INFO] Running command: systemctl stop eb-app.target
+2026/03/12 06:04:48.425212 [INFO] Running command: systemctl show -p ConsistsOf eb-app.target | cut -d= -f2
+2026/03/12 06:04:48.495943 [INFO] web.service
+
+2026/03/12 06:04:48.495969 [INFO] deregistering process: web
+2026/03/12 06:04:48.495980 [INFO] Running command: systemctl show -p PartOf web.service
+2026/03/12 06:04:48.557264 [INFO] Running command: systemctl is-active web.service
+2026/03/12 06:04:48.565448 [INFO] Running command: systemctl disable web.service
+2026/03/12 06:04:48.812556 [INFO] Removed "/etc/systemd/system/multi-user.target.wants/web.service".
+
+2026/03/12 06:04:48.812658 [INFO] Running command: systemctl daemon-reload
+2026/03/12 06:04:49.082811 [INFO] Running command: systemctl reset-failed
+2026/03/12 06:04:49.091583 [INFO] Running command: systemctl is-active web.service
+2026/03/12 06:04:49.099168 [INFO] Process web has been fully terminated
+2026/03/12 06:04:49.099184 [INFO] All processes have been fully terminated
+2026/03/12 06:04:49.099188 [INFO] Removing /var/app/current/ if it exists
+2026/03/12 06:04:49.379216 [INFO] Renaming /var/app/staging/ to /var/app/current/
+2026/03/12 06:04:49.379250 [INFO] Register application processes...
+2026/03/12 06:04:49.379255 [INFO] Registering the proc: web
+
+2026/03/12 06:04:49.379267 [INFO] Running command: systemctl show -p PartOf web.service
+2026/03/12 06:04:49.410266 [INFO] Running command: systemctl daemon-reload
+2026/03/12 06:04:49.791579 [INFO] Running command: systemctl reset-failed
+2026/03/12 06:04:49.825351 [INFO] Running command: systemctl is-enabled eb-app.target
+2026/03/12 06:04:49.874084 [INFO] Running command: systemctl enable eb-app.target
+2026/03/12 06:04:50.118387 [INFO] Running command: systemctl start eb-app.target
+2026/03/12 06:04:50.128306 [INFO] Running command: systemctl enable web.service
+2026/03/12 06:04:50.402321 [INFO] Created symlink /etc/systemd/system/multi-user.target.wants/web.service → /etc/systemd/system/web.service.
+
+2026/03/12 06:04:50.402363 [INFO] Running command: systemctl show -p PartOf web.service
+2026/03/12 06:04:50.413606 [INFO] Running command: systemctl is-active web.service
+2026/03/12 06:04:50.421275 [INFO] Running command: systemctl start web.service
+2026/03/12 06:04:50.491202 [INFO] Executing instruction: start X-Ray
+2026/03/12 06:04:50.491227 [INFO] X-Ray is not enabled.
+2026/03/12 06:04:50.491232 [INFO] Executing instruction: start proxy with new configuration
+2026/03/12 06:04:50.491258 [INFO] Running command: /usr/sbin/nginx -t -c /var/proxy/staging/nginx/nginx.conf
+2026/03/12 06:04:50.517570 [INFO] nginx: [warn] could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+nginx: the configuration file /var/proxy/staging/nginx/nginx.conf syntax is ok
+nginx: configuration file /var/proxy/staging/nginx/nginx.conf test is successful
+
+2026/03/12 06:04:50.517858 [INFO] Running command: cp -rp /var/proxy/staging/nginx/* /etc/nginx
+2026/03/12 06:04:50.522583 [INFO] Running command: systemctl show -p PartOf nginx.service
+2026/03/12 06:04:50.547579 [INFO] Running command: systemctl daemon-reload
+2026/03/12 06:04:50.967058 [INFO] Running command: systemctl reset-failed
+2026/03/12 06:04:50.979468 [INFO] Running command: systemctl show -p PartOf nginx.service
+2026/03/12 06:04:51.001739 [INFO] Running command: systemctl is-active nginx.service
+2026/03/12 06:04:51.017746 [INFO] Running command: systemctl start nginx.service
+2026/03/12 06:04:51.147364 [INFO] Executing instruction: configureSqsd
+2026/03/12 06:04:51.147390 [INFO] This is a web server environment instance, skip configure sqsd daemon ...
+2026/03/12 06:04:51.147394 [INFO] Executing instruction: startSqsd
+2026/03/12 06:04:51.147397 [INFO] This is a web server environment instance, skip start sqsd daemon ...
+2026/03/12 06:04:51.147400 [INFO] Executing instruction: Track pids in healthd
+2026/03/12 06:04:51.147404 [INFO] This is an enhanced health env...
+2026/03/12 06:04:51.147415 [INFO] Running command: systemctl show -p ConsistsOf aws-eb.target | cut -d= -f2
+2026/03/12 06:04:51.162602 [INFO] nginx.service healthd.service cfn-hup.service
+
+2026/03/12 06:04:51.162637 [INFO] Running command: systemctl show -p ConsistsOf eb-app.target | cut -d= -f2
+2026/03/12 06:04:51.179377 [INFO] web.service
+
+2026/03/12 06:04:51.179899 [INFO] Executing instruction: RunConfigDeployPostDeployHooks
+2026/03/12 06:04:51.180010 [INFO] Executing platform hooks in .platform/confighooks/postdeploy/
+2026/03/12 06:04:51.180033 [INFO] The dir .platform/confighooks/postdeploy/ does not exist
+2026/03/12 06:04:51.180037 [INFO] Finished running scripts in /var/app/current/.platform/confighooks/postdeploy
+2026/03/12 06:04:51.180044 [INFO] Executing cleanup logic
+2026/03/12 06:04:51.180151 [INFO] CommandService Response: {"status":"SUCCESS","api_version":"1.0","results":[{"status":"SUCCESS","msg":"Engine execution has succeeded.","returncode":0,"events":[{"msg":"Instance deployment completed successfully.","timestamp":1773295491180,"severity":"INFO"}]}]}
+
+2026/03/12 06:04:51.180368 [INFO] Platform Engine finished execution on command: config-deploy
+
+2026/03/12 06:06:54.430212 [INFO] Starting...
+2026/03/12 06:06:54.430263 [INFO] Starting EBPlatform-PlatformEngine
+2026/03/12 06:06:54.430285 [INFO] reading event message file
+2026/03/12 06:06:54.430805 [INFO] Engine received EB command cfn-hup-exec
+
+2026/03/12 06:06:54.496865 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 -r AWSEBAutoScalingGroup --region us-east-1
+2026/03/12 06:06:54.802631 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 -r AWSEBBeanstalkMetadata --region us-east-1
+2026/03/12 06:06:55.105824 [INFO] checking whether command tail-log is applicable to this instance...
+2026/03/12 06:06:55.105849 [INFO] this command is applicable to the instance, thus instance should execute command
+2026/03/12 06:06:55.105852 [INFO] Engine command: (tail-log)
+
+2026/03/12 06:06:55.105905 [INFO] Executing instruction: GetTailLogs
+2026/03/12 06:06:55.105908 [INFO] Tail Logs...
+2026/03/12 06:06:55.106944 [INFO] Running command: tail -n 100 /var/log/eb-engine.log
+
+
+----------------------------------------
+/var/log/eb-hooks.log
+----------------------------------------
+
+
+----------------------------------------
+/var/log/nginx/access.log
+----------------------------------------
+172.31.5.177 - - [12/Mar/2026:05:59:02 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:04 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:05 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:05 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:05 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:05 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:06 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:06 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:06 +0000] "GET / HTTP/1.1" 502 552 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:50 +0000] "GET / HTTP/1.1" 200 396 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:50 +0000] "GET /assets/index-DXR5X6fg.js HTTP/1.1" 200 146594 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:05:59:50 +0000] "GET /assets/index-irIv1QAt.css HTTP/1.1" 200 82 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:06:01:38 +0000] "POST /api/products HTTP/1.1" 401 38 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:06:05:55 +0000] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:06:05:55 +0000] "GET /assets/index-irIv1QAt.css HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:06:05:55 +0000] "GET /assets/index-DXR5X6fg.js HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [12/Mar/2026:06:06:10 +0000] "POST /api/products HTTP/1.1" 401 38 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+
+
+----------------------------------------
+/var/log/nginx/error.log
+----------------------------------------
+2026/03/12 05:57:57 [warn] 2068#2068: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/03/12 05:57:57 [warn] 2117#2117: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/03/12 05:57:57 [warn] 2119#2119: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/03/12 05:59:02 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:04 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:05 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:05 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:05 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:05 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:06 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:06 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 05:59:06 [error] 2122#2122: *23 connect() failed (111: Connection refused) while connecting to upstream, client: 172.31.5.177, server: , request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:5000/", host: "paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com"
+2026/03/12 06:04:50 [warn] 3115#3115: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/03/12 06:04:51 [warn] 3165#3165: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/03/12 06:04:51 [warn] 3166#3166: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+
+
+----------------------------------------
+/var/log/web.stdout.log
+----------------------------------------
+Mar 12 05:57:57 ip-172-31-93-148 web[2064]: > paperstudio-backend@1.0.0 start
+Mar 12 05:57:57 ip-172-31-93-148 web[2064]: > node server.js
+Mar 12 05:59:03 ip-172-31-93-148 web[2110]: ❌ Unable to connect to PostgreSQL: connect ECONNREFUSED 172.31.64.90:5432
+Mar 12 05:59:04 ip-172-31-93-148 web[2239]: > paperstudio-backend@1.0.0 start
+Mar 12 05:59:04 ip-172-31-93-148 web[2239]: > node server.js
+Mar 12 05:59:05 ip-172-31-93-148 web[2253]: ❌ Unable to connect to PostgreSQL: connect ECONNREFUSED 172.31.64.90:5432
+Mar 12 05:59:05 ip-172-31-93-148 web[2265]: > paperstudio-backend@1.0.0 start
+Mar 12 05:59:05 ip-172-31-93-148 web[2265]: > node server.js
+Mar 12 05:59:06 ip-172-31-93-148 web[2279]: ❌ Unable to connect to PostgreSQL: connect ECONNREFUSED 172.31.64.90:5432
+Mar 12 05:59:07 ip-172-31-93-148 web[2291]: > paperstudio-backend@1.0.0 start
+Mar 12 05:59:07 ip-172-31-93-148 web[2291]: > node server.js
+Mar 12 05:59:08 ip-172-31-93-148 web[2305]: ❌ Unable to connect to PostgreSQL: connect ECONNREFUSED 172.31.64.90:5432
+Mar 12 05:59:08 ip-172-31-93-148 web[2317]: > paperstudio-backend@1.0.0 start
+Mar 12 05:59:08 ip-172-31-93-148 web[2317]: > node server.js
+Mar 12 05:59:09 ip-172-31-93-148 web[2331]: ✅ PostgreSQL connected successfully (AWS RDS)
+Mar 12 05:59:09 ip-172-31-93-148 web[2331]: 📦 Database tables synced
+Mar 12 05:59:09 ip-172-31-93-148 web[2331]: 🚀 PaperStudio API on port 5000
+Mar 12 06:04:50 ip-172-31-93-148 web[3111]: > paperstudio-backend@1.0.0 start
+Mar 12 06:04:50 ip-172-31-93-148 web[3111]: > node server.js
+Mar 12 06:04:52 ip-172-31-93-148 web[3153]: ✅ PostgreSQL connected successfully (AWS RDS)
+Mar 12 06:04:52 ip-172-31-93-148 web[3153]: 📦 Database tables synced
+Mar 12 06:04:52 ip-172-31-93-148 web[3153]: 🚀 PaperStudio API on port 5000
+
+

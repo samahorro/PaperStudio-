@@ -1,0 +1,231 @@
+----------------------------------------
+/var/log/web.stdout.log
+----------------------------------------
+Mar 11 01:05:47 ip-172-31-29-90 web[2139]: > Elastic-Beanstalk-Sample-App@0.0.1 start
+Mar 11 01:05:47 ip-172-31-29-90 web[2139]: > node app.js
+Mar 11 01:05:47 ip-172-31-29-90 web[2181]: Server running at http://127.0.0.1:5000/
+
+
+----------------------------------------
+/var/log/eb-engine.log
+----------------------------------------
+2026/03/11 01:05:46.983033 [INFO] X-Ray is not enabled.
+2026/03/11 01:05:46.983038 [INFO] Executing instruction: start proxy with new configuration
+2026/03/11 01:05:46.983062 [INFO] Running command: /usr/sbin/nginx -t -c /var/proxy/staging/nginx/nginx.conf
+2026/03/11 01:05:47.043227 [INFO] nginx: [warn] could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+nginx: the configuration file /var/proxy/staging/nginx/nginx.conf syntax is ok
+nginx: configuration file /var/proxy/staging/nginx/nginx.conf test is successful
+
+2026/03/11 01:05:47.043384 [INFO] Running command: cp -rp /var/proxy/staging/nginx/* /etc/nginx
+2026/03/11 01:05:47.049478 [INFO] Running command: systemctl show -p PartOf nginx.service
+2026/03/11 01:05:47.071638 [INFO] Running command: systemctl daemon-reload
+2026/03/11 01:05:47.502955 [INFO] Running command: systemctl reset-failed
+2026/03/11 01:05:47.515241 [INFO] Running command: systemctl show -p PartOf nginx.service
+2026/03/11 01:05:47.536900 [INFO] Running command: systemctl is-active nginx.service
+2026/03/11 01:05:47.549927 [INFO] Running command: systemctl start nginx.service
+2026/03/11 01:05:47.681469 [INFO] Executing instruction: configureSqsd
+2026/03/11 01:05:47.681487 [INFO] This is a web server environment instance, skip configure sqsd daemon ...
+2026/03/11 01:05:47.681491 [INFO] Executing instruction: startSqsd
+2026/03/11 01:05:47.681495 [INFO] This is a web server environment instance, skip start sqsd daemon ...
+2026/03/11 01:05:47.681499 [INFO] Executing instruction: Track pids in healthd
+2026/03/11 01:05:47.681503 [INFO] This is an enhanced health env...
+2026/03/11 01:05:47.681516 [INFO] Running command: systemctl show -p ConsistsOf aws-eb.target | cut -d= -f2
+2026/03/11 01:05:47.691980 [INFO] cfn-hup.service healthd.service nginx.service
+
+2026/03/11 01:05:47.692008 [INFO] Running command: systemctl show -p ConsistsOf eb-app.target | cut -d= -f2
+2026/03/11 01:05:47.701777 [INFO] web.service
+
+2026/03/11 01:05:47.702044 [INFO] Executing instruction: RunAppDeployPostDeployHooks
+2026/03/11 01:05:47.702060 [INFO] Executing platform hooks in .platform/hooks/postdeploy/
+2026/03/11 01:05:47.702075 [INFO] The dir .platform/hooks/postdeploy/ does not exist
+2026/03/11 01:05:47.702078 [INFO] Finished running scripts in /var/app/current/.platform/hooks/postdeploy
+2026/03/11 01:05:47.702084 [INFO] Executing cleanup logic
+2026/03/11 01:05:47.702151 [INFO] CommandService Response: {"status":"SUCCESS","api_version":"1.0","results":[{"status":"SUCCESS","msg":"Engine execution has succeeded.","returncode":0,"events":[{"msg":"Instance deployment completed successfully.","timestamp":1773191147702,"severity":"INFO"}]}]}
+
+2026/03/11 01:05:47.702570 [INFO] Platform Engine finished execution on command: app-deploy
+
+2026/03/11 01:16:46.886135 [INFO] Starting...
+2026/03/11 01:16:46.886185 [INFO] Starting EBPlatform-PlatformEngine
+2026/03/11 01:16:46.886206 [INFO] reading event message file
+2026/03/11 01:16:46.886575 [INFO] Engine received EB command cfn-hup-exec
+
+2026/03/11 01:16:46.957741 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 -r AWSEBAutoScalingGroup --region us-east-1
+2026/03/11 01:16:47.265137 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 -r AWSEBBeanstalkMetadata --region us-east-1
+2026/03/11 01:16:47.560307 [INFO] checking whether command app-deploy is applicable to this instance...
+2026/03/11 01:16:47.560320 [INFO] this command is applicable to the instance, thus instance should execute command
+2026/03/11 01:16:47.560322 [INFO] Engine command: (app-deploy)
+
+2026/03/11 01:16:47.560326 [INFO] Downloading EB Application...
+2026/03/11 01:16:47.560328 [INFO] Region: us-east-1
+2026/03/11 01:16:47.560330 [INFO] envID: e-gexbpwf9dv
+2026/03/11 01:16:47.560332 [INFO] envBucket: elasticbeanstalk-us-east-1-632757408866
+2026/03/11 01:16:47.560335 [INFO] accountID: 632757408866
+2026/03/11 01:16:47.560338 [INFO] Using manifest file name from command request
+2026/03/11 01:16:47.560345 [INFO] Manifest name is : manifest_1773191784684
+2026/03/11 01:16:47.560348 [INFO] Download app version manifest
+2026/03/11 01:16:47.560538 [INFO] Downloading: bucket: elasticbeanstalk-us-east-1-632757408866, object: resources/environments/e-gexbpwf9dv/_runtime/versions/manifest_1773191784684, expected bucket owner: 632757408866
+2026/03/11 01:16:47.607314 [INFO] Download successful94bytes downloaded
+2026/03/11 01:16:47.607455 [INFO] Trying to read and parse version manifest...
+2026/03/11 01:16:47.607539 [INFO] Downloading: bucket: elasticbeanstalk-us-east-1-632757408866, object: resources/environments/e-gexbpwf9dv/_runtime/_versions/PaperStudio/v2-hello-world, expected bucket owner: 632757408866
+2026/03/11 01:16:47.641205 [INFO] Download successful23016bytes downloaded
+2026/03/11 01:16:47.641504 [INFO] Executing instruction: ElectLeader
+2026/03/11 01:16:47.641512 [INFO] Running leader election for instance i-014d7c4934908cea3...
+2026/03/11 01:16:47.641515 [INFO] Calling the cfn-elect-cmd-leader to elect the command leader.
+2026/03/11 01:16:47.641530 [INFO] Running command: /opt/aws/bin/cfn-elect-cmd-leader --stack arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 --command-name ElasticBeanstalkCommand-AWSEBAutoScalingGroup --invocation-id 44255b23-049c-4955-b264-5d565e6e9ca6 --listener-id i-014d7c4934908cea3 --region us-east-1
+2026/03/11 01:16:47.959540 [INFO] Instance is Leader.
+2026/03/11 01:16:47.959686 [INFO] Executing instruction: stopSqsd
+2026/03/11 01:16:47.959695 [INFO] This is a web server environment instance, skip stop sqsd daemon ...
+2026/03/11 01:16:47.959700 [INFO] Executing instruction: PreBuildEbExtension
+2026/03/11 01:16:47.959703 [INFO] Starting executing the config set Infra-EmbeddedPreBuild.
+2026/03/11 01:16:47.959717 [INFO] Running command: /opt/aws/bin/cfn-init -s arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 -r AWSEBAutoScalingGroup --region us-east-1 --configsets Infra-EmbeddedPreBuild
+2026/03/11 01:16:48.288139 [INFO] Finished executing the config set Infra-EmbeddedPreBuild.
+
+2026/03/11 01:16:48.288176 [INFO] Executing instruction: StageApplication
+2026/03/11 01:16:48.288180 [INFO] Recreating /var/app/staging/
+2026/03/11 01:16:48.288304 [INFO] extracting /opt/elasticbeanstalk/deployment/app_source_bundle to /var/app/staging/
+2026/03/11 01:16:48.288319 [INFO] Running command: /usr/bin/unzip -q -o /opt/elasticbeanstalk/deployment/app_source_bundle -d /var/app/staging/
+2026/03/11 01:16:48.294702 [INFO] warning:  /opt/elasticbeanstalk/deployment/app_source_bundle appears to use backslashes as path separators
+
+2026/03/11 01:16:48.294748 [ERROR] An error occurred during execution of command [app-deploy] - [StageApplication]. Stop running the command. Error: Command /usr/bin/unzip -q -o /opt/elasticbeanstalk/deployment/app_source_bundle -d /var/app/staging/ failed with error exit status 1. Stderr:warning:  /opt/elasticbeanstalk/deployment/app_source_bundle appears to use backslashes as path separators
+ 
+
+2026/03/11 01:16:48.294752 [INFO] Executing cleanup logic
+2026/03/11 01:16:48.294825 [INFO] CommandService Response: {"status":"FAILURE","api_version":"1.0","results":[{"status":"FAILURE","msg":"Engine execution has encountered an error.","returncode":1,"events":[{"msg":"Instance deployment: Your source bundle has issues that caused the deployment to fail. For details, see 'eb-engine.log'.","timestamp":1773191808294,"severity":"ERROR"},{"msg":"Instance deployment failed. For details, see 'eb-engine.log'.","timestamp":1773191808294,"severity":"ERROR"}]}]}
+
+2026/03/11 01:16:48.295907 [INFO] Platform Engine finished execution on command: app-deploy
+
+2026/03/11 01:19:17.950150 [INFO] Starting...
+2026/03/11 01:19:17.950198 [INFO] Starting EBPlatform-PlatformEngine
+2026/03/11 01:19:17.950228 [INFO] reading event message file
+2026/03/11 01:19:17.950590 [INFO] Engine received EB command cfn-hup-exec
+
+2026/03/11 01:19:18.033065 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 -r AWSEBAutoScalingGroup --region us-east-1
+2026/03/11 01:19:18.364023 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:us-east-1:632757408866:stack/awseb-e-gexbpwf9dv-stack/310bf8c0-1ce6-11f1-9d42-121d0d439f15 -r AWSEBBeanstalkMetadata --region us-east-1
+2026/03/11 01:19:18.672994 [INFO] checking whether command tail-log is applicable to this instance...
+2026/03/11 01:19:18.673010 [INFO] this command is applicable to the instance, thus instance should execute command
+2026/03/11 01:19:18.673017 [INFO] Engine command: (tail-log)
+
+2026/03/11 01:19:18.673111 [INFO] Executing instruction: GetTailLogs
+2026/03/11 01:19:18.673115 [INFO] Tail Logs...
+2026/03/11 01:19:18.674191 [INFO] Running command: tail -n 100 /var/log/web.stdout.log
+2026/03/11 01:19:18.676367 [INFO] Running command: tail -n 100 /var/log/eb-engine.log
+
+
+----------------------------------------
+/var/log/eb-hooks.log
+----------------------------------------
+
+
+----------------------------------------
+/var/log/nginx/access.log
+----------------------------------------
+172.31.26.39 - - [11/Mar/2026:01:08:46 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:46 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:46 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:46 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:47 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:50 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:50 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:51 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:51 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:51 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:52 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:52 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:52 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:52 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:52 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:53 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:54 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:55 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:55 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:55 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:55 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:55 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:58 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:59 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:59 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:59 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:59 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:08:59 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:00 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:01 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:05 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:05 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:05 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:05 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:05 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:05 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:06 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:06 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:06 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:06 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:18 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:18 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:19 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:19 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:19 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:20 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:20 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:20 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:22 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:22 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:30 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:30 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:30 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:09:31 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://paperstudio-env.eba-zhfvtb4v.us-east-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" "172.250.45.134"
+172.31.5.177 - - [11/Mar/2026:01:09:55 +0000] "GET /robots.txt HTTP/1.1" 200 17275 "-" "xfa1" "187.110.175.205"
+172.31.26.39 - - [11/Mar/2026:01:11:19 +0000] "GET /robots.txt HTTP/1.1" 200 17275 "-" "xfa1" "187.110.175.205"
+172.31.26.39 - - [11/Mar/2026:01:13:49 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" "159.89.29.161"
+172.31.26.39 - - [11/Mar/2026:01:13:50 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://54.205.188.11/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" "159.89.29.161"
+172.31.5.177 - - [11/Mar/2026:01:15:05 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7705" "172.250.45.134"
+172.31.26.39 - - [11/Mar/2026:01:18:22 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (compatible; InternetMeasurement/1.0; +https://internet-measurement.com/)" "87.236.176.38"
+
+
+----------------------------------------
+/var/log/nginx/error.log
+----------------------------------------
+2026/03/11 01:05:47 [warn] 2143#2143: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/03/11 01:05:47 [warn] 2193#2193: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/03/11 01:05:47 [warn] 2194#2194: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+
+

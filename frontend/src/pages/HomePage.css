@@ -114,9 +114,62 @@ a {
 }
 
 .collection-card {
-  background: #fff;
+  background: #8a9e80;
   border-radius: 12px;
-  height: 140px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.collection-card-placeholder {
+  position: absolute;
+  inset: 0;
+  background: #8a9e80;
+}
+
+/* key-based remount triggers fade-in on each new image */
+@keyframes collFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.collection-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: collFadeIn 0.8s ease;
+}
+
+.collection-card-overlay {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.32);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.collection-card:hover .collection-card-overlay {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.collection-card h3 {
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
 
 /* ─── PRODUCT SECTIONS ─── */
@@ -131,10 +184,25 @@ a {
   color: #111;
 }
 
+.product-row-scroll {
+  overflow-x: auto;
+  padding-bottom: 8px;
+  /* allow cards to visually overflow upward on hover without clipping */
+  padding-top: 12px;
+  margin-top: -12px;
+}
+
 .product-row {
   display: flex;
-  gap: 16px;
-  overflow-x: auto;
+  gap: 20px;
+  width: max-content;
+}
+
+/* Force uniform card sizing on the homepage product rows */
+.product-row-scroll .product-card {
+  flex: 0 0 220px;
+  max-width: 220px;
+  min-width: 220px;
 }
 
 .home-product-card {

@@ -4,3 +4,8 @@ dist/
 *.log
 .DS_Store
 .vs/
+
+eb_config.json
+eb_fresh_logs_2.txt
+*.log
+

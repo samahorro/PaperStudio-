@@ -16,11 +16,11 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
-  const login = async (email, password) => {
+  const login = async (email, password, mfaCode = null) => {
     setLoading(true)
     setError('')
     try {
-      const data = await loginUser({ email, password })
+      const data = await loginUser({ email, password, ...(mfaCode && { mfaCode }) })
       if (data.token) {
         localStorage.setItem('token', data.token)
         localStorage.setItem('user', JSON.stringify(data.user))
@@ -31,9 +31,14 @@ export function AuthProvider({ children }) {
         setLoading(false)
         return { success: false, requiresMfa: true }
       } else {
-        setError(data.message || 'Login failed.')
+        // Show specific validation errors if available
+        let msg = data.message || 'Login failed.'
+        if (data.errors && data.errors.length > 0) {
+          msg = data.errors.map(e => e.message).join(', ')
+        }
+        setError(msg)
         setLoading(false)
-        return { success: false, message: data.message }
+        return { success: false, message: msg }
       }
     } catch (err) {
       setError('Something went wrong. Please try again.')

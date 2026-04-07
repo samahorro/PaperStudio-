@@ -1,0 +1,9 @@
+{
+  "name": "paperstudio-root",
+  "version": "1.0.0",
+  "description": "Root package.json to proxy AWS Elastic Beanstalk deployments to the backend directory",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "postinstall": "cd backend && npm install"
+  }
+}

@@ -1,8 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const speakeasy = require('speakeasy');
-const qrcode = require('qrcode');
+const { sendVerificationEmail, sendLoginOtpEmail, sendPasswordResetEmail } = require('../utils/emailService');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'paperstudio_fallback_secret_123';
 
@@ -34,10 +33,15 @@ const registerUser = async (req, res) => {
       emailVerificationCode
     });
 
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, emailVerificationCode);
+    } catch (emailErr) {
+      console.error('Failed to send verification email:', emailErr.message);
+    }
+
     res.status(201).json({
-      message: "User registered. Please verify your email with the provided code.",
-      // In production, send this via email. Returning it here for testing.
-      mockEmailCode: emailVerificationCode,
+      message: "User registered. Please check your email for the verification code.",
       user: {
         id: user.id,
         name: user.name,
@@ -89,29 +93,44 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    if (!user.isEmailVerified) {
+    // Admin accounts skip email verification and MFA
+    if (user.role !== 'admin' && !user.isEmailVerified) {
       return res.status(403).json({ message: "Please verify your email before logging in" });
     }
 
-    // Handle MFA Logic Flow
-    if (user.mfaEnabled) {
-      if (!mfaCode) {
-        return res.status(403).json({ 
-          message: "MFA Code is required to complete login", 
-          requiresMfa: true 
-        });
+    // Admin accounts bypass MFA — log in directly
+    if (user.role === 'admin') {
+      // Skip MFA, go straight to token
+    } else if (!mfaCode) {
+      // Email-based MFA for regular users: generate and email an OTP
+      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      user.loginOtpCode = otpCode;
+      user.loginOtpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+      await user.save();
+
+      try {
+        await sendLoginOtpEmail(email, otpCode);
+      } catch (emailErr) {
+        console.error('Failed to send login OTP email:', emailErr.message);
       }
 
-      const verified = speakeasy.totp.verify({
-        secret: user.mfaSecret,
-        encoding: 'base32',
-        token: mfaCode,
-        window: 1
+      return res.status(403).json({
+        message: "A verification code has been sent to your email.",
+        requiresMfa: true
       });
-
-      if (!verified) {
-        return res.status(401).json({ message: "Invalid MFA code" });
+    } else {
+      // Verify the email OTP
+      if (!user.loginOtpCode || user.loginOtpCode !== mfaCode) {
+        return res.status(401).json({ message: "Invalid verification code" });
       }
+      if (!user.loginOtpExpires || new Date() > user.loginOtpExpires) {
+        return res.status(401).json({ message: "Verification code has expired. Please log in again." });
+      }
+
+      // Clear OTP after successful use
+      user.loginOtpCode = null;
+      user.loginOtpExpires = null;
+      await user.save();
     }
 
     // Login fully authenticated!
@@ -205,10 +224,15 @@ const forgotPassword = async (req, res) => {
     user.passwordResetExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
     await user.save();
 
+    // Send reset code via email
+    try {
+      await sendPasswordResetEmail(email, resetCode);
+    } catch (emailErr) {
+      console.error('Failed to send reset email:', emailErr.message);
+    }
+
     res.json({
-      message: "If an account with that email exists, a reset code has been sent.",
-      // In production, send via email. Returning for testing.
-      mockResetCode: resetCode
+      message: "If an account with that email exists, a reset code has been sent."
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });

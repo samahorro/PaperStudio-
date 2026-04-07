@@ -12,6 +12,7 @@ function ProductsPage() {
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     category: searchParams.get('category') || '',
+    collectionName: searchParams.get('collection') || '',
     color: '',
     inStock: null,
     minPrice: null,
@@ -30,6 +31,7 @@ function ProductsPage() {
 
   const filteredProducts = products.filter(product => {
     if (filters.category && product.category !== filters.category) return false
+    if (filters.collectionName && product.collectionName !== filters.collectionName) return false
     if (filters.color && product.color.toLowerCase() !== filters.color) return false
     if (filters.inStock !== null && product.inStock !== filters.inStock) return false
     if (filters.minPrice !== null && parseFloat(product.price) < filters.minPrice) return false

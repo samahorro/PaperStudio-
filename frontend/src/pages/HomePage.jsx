@@ -6,9 +6,17 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import heroVideo from '../assets/images/hero-vid.mp4'
 import "./HomePage.css"
 
+const collections = [
+  { name: 'Wooden Collection', path: '/collections?collection=Wooden Collection' },
+  { name: 'Zento Collection', path: '/collections?collection=Zento Collection' },
+  { name: 'Kuru Toga Collection', path: '/collections?collection=Kuru Toga Collection' },
+]
+
 function HomePage() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  // one cycling index per collection card
+  const [collectionIndices, setCollectionIndices] = useState([0, 0, 0])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -18,6 +26,21 @@ function HomePage() {
     }
     fetchProducts()
   }, [])
+
+  // Auto-cycle each collection card through its own products
+  useEffect(() => {
+    if (products.length === 0) return
+    const timer = setInterval(() => {
+      setCollectionIndices(prev =>
+        collections.map((col, i) => {
+          const imgs = products.filter(p => p.collectionName === col.name && p.imageUrl)
+          if (imgs.length <= 1) return 0
+          return (prev[i] + 1) % imgs.length
+        })
+      )
+    }, 3000)
+    return () => clearInterval(timer)
+  }, [products])
 
   // split by all 6 categories
   const pens = products.filter(p => p.category === 'pens')
@@ -48,9 +71,21 @@ function HomePage() {
       <section className="home-collection">
         <h2>Collection</h2>
         <div className="collection-grid">
-          <NavLink to="/collections?category=notebooks" className="collection-card" />
-          <NavLink to="/collections?category=pencils" className="collection-card" />
-          <NavLink to="/collections?category=cases" className="collection-card" />
+          {collections.map((col, i) => {
+            const imgs = products.filter(p => p.collectionName === col.name && p.imageUrl)
+            const currentImg = imgs[collectionIndices[i]]?.imageUrl ?? null
+            return (
+              <NavLink key={col.name} to={col.path} className="collection-card">
+                {currentImg
+                  ? <img key={currentImg} src={currentImg} alt={col.name} className="collection-card-img" />
+                  : <div className="collection-card-placeholder" />
+                }
+                <div className="collection-card-overlay">
+                  <h3>{col.name}</h3>
+                </div>
+              </NavLink>
+            )
+          })}
         </div>
       </section>
 
@@ -59,10 +94,12 @@ function HomePage() {
           {pens.length > 0 && (
             <section className="home-section">
               <h2>Pens</h2>
-              <div className="product-row">
-                {pens.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {pens.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -70,10 +107,12 @@ function HomePage() {
           {pencils.length > 0 && (
             <section className="home-section">
               <h2>Pencils</h2>
-              <div className="product-row">
-                {pencils.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {pencils.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -81,10 +120,12 @@ function HomePage() {
           {cases.length > 0 && (
             <section className="home-section dark">
               <h2>Cases</h2>
-              <div className="product-row">
-                {cases.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {cases.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -92,10 +133,12 @@ function HomePage() {
           {notebooks.length > 0 && (
             <section className="home-section">
               <h2>Notebooks</h2>
-              <div className="product-row">
-                {notebooks.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {notebooks.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -103,10 +146,12 @@ function HomePage() {
           {sketchbooks.length > 0 && (
             <section className="home-section dark">
               <h2>Sketchbooks</h2>
-              <div className="product-row">
-                {sketchbooks.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {sketchbooks.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -114,10 +159,12 @@ function HomePage() {
           {calendars.length > 0 && (
             <section className="home-section">
               <h2>Calendars</h2>
-              <div className="product-row">
-                {calendars.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {calendars.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}

@@ -35,6 +35,10 @@ const allowedOrigins = [
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
+// Trust first proxy (nginx / Elastic Beanstalk load balancer)
+// This is required for express-rate-limit to work behind a proxy
+app.set('trust proxy', 1);
+
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
     ? allowedOrigins
@@ -118,8 +122,8 @@ const startServer = async () => {
     if (connected) {
       console.log('✅ Database connection established');
       
-      // Sync models (alter in development to add new columns without wiping data)
-      await syncDatabase({ alter: process.env.NODE_ENV === 'development' });
+      // Sync models (alter: true adds new columns without wiping data)
+      await syncDatabase({ alter: true });
     } else {
       console.log('⚠️ Starting without database connection');
     }

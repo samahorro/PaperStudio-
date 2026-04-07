@@ -43,6 +43,22 @@ const Product = sequelize.define('Product', {
   imageUrl: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  hoverImageUrl: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  isNewArrival: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  colorsCount: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  collectionName: {
+    type: DataTypes.ENUM('None', 'Wooden Collection', 'Zento Collection', 'Kuru Toga Collection'),
+    defaultValue: 'None'
   }
 }, {
   timestamps: true,

@@ -1,4 +1,4 @@
-const BASE_URL = './api'
+const BASE_URL = '/api'
 
 export const registerUser = async (userData) => {
     // userData format: { username, email, password }
@@ -90,6 +90,23 @@ export const createProduct = async (token, formData) => {
 export const getProductById = async (id) => {
     console.log("Mocking Get Product By ID API Call:", id);
     const response = await fetch(`${BASE_URL}/products/${id}`);
+    return response.json();
+};
+
+export const updateProduct = async (token, productId, formData) => {
+    const response = await fetch(`${BASE_URL}/products/${productId}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+    });
+    return response.json();
+};
+
+export const deleteProduct = async (token, productId) => {
+    const response = await fetch(`${BASE_URL}/products/${productId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
     return response.json();
 };
 

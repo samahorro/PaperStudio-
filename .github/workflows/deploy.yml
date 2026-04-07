@@ -1,4 +1,4 @@
-name: Deploy Backend to AWS Elastic Beanstalk
+name: Deploy to AWS Elastic Beanstalk
 
 on:
   push:
@@ -10,36 +10,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install backend dependencies
-        working-directory: ./backend
-        run: npm ci
-
+      # 3. Install and build the frontend
       - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
+        run: npm install
+        working-directory: frontend
 
       - name: Build frontend
-        working-directory: ./frontend
         run: npm run build
+        working-directory: frontend
 
-      - name: Copy frontend build to backend
+      # 4. Copy frontend build output into backend/public
+      - name: Copy frontend build to backend/public
         run: |
-          rm -rf backend/public/*
-          cp -r frontend/dist/* backend/public/
+          rm -rf backend/public
+          mkdir -p backend/public
+          cp -r frontend/dist/. backend/public/
 
-      - name: Generate deployment package
+      # 5. Install backend dependencies
+      - name: Install backend dependencies
+        run: npm install --omit=dev
+        working-directory: backend
+
+      # 6. Create deployment ZIP (Linux-native, so paths are always forward slashes)
+      - name: Create deployment package
         run: |
           cd backend
-          zip -r ../deploy.zip . -x "node_modules/*" ".env"
+          zip -r ../deploy-eb.zip . \
+            --exclude "*.git*" \
+            --exclude "node_modules/.cache/*" \
+            --exclude "*.log" \
+            --exclude ".env"
+        shell: bash
 
+      # 7. Deploy to Elastic Beanstalk
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v22
         with:
@@ -47,6 +60,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: PaperStudio
           environment_name: paperstudio-env
-          version_label: "paperstudio-${{ github.sha }}"
           region: us-east-1
-          deployment_package: deploy.zip
+          version_label: "v-${{ github.sha }}"
+          deployment_package: deploy-eb.zip
+          wait_for_environment_recovery: 60
