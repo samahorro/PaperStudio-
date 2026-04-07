@@ -118,7 +118,7 @@ a {
 .collection-card {
   background: #8a9e80;
   border-radius: 12px;
-  aspect-ratio: 4/3;
+  aspect-ratio: 2/1;
   display: flex;
   align-items: center;
   justify-content: center;
