@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { getAllProducts } from '../utils/api'
 import ProductCard from '../components/ProductCard'
@@ -6,10 +6,17 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import heroVideo from '../assets/images/hero-vid.mp4'
 import "./HomePage.css"
 
+const collections = [
+  { name: 'Wooden Collection', path: '/collections?collection=Wooden Collection' },
+  { name: 'Zento Collection', path: '/collections?collection=Zento Collection' },
+  { name: 'Kuru Toga Collection', path: '/collections?collection=Kuru Toga Collection' },
+]
+
 function HomePage() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
-  const [collectionIndex, setCollectionIndex] = useState(0)
+  // one cycling index per collection card
+  const [collectionIndices, setCollectionIndices] = useState([0, 0, 0])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,6 +27,21 @@ function HomePage() {
     fetchProducts()
   }, [])
 
+  // Auto-cycle each collection card through its own products
+  useEffect(() => {
+    if (products.length === 0) return
+    const timer = setInterval(() => {
+      setCollectionIndices(prev =>
+        collections.map((col, i) => {
+          const imgs = products.filter(p => p.collectionName === col.name && p.imageUrl)
+          if (imgs.length <= 1) return 0
+          return (prev[i] + 1) % imgs.length
+        })
+      )
+    }, 3000)
+    return () => clearInterval(timer)
+  }, [products])
+
   // split by all 6 categories
   const pens = products.filter(p => p.category === 'pens')
   const pencils = products.filter(p => p.category === 'pencils')
@@ -27,24 +49,6 @@ function HomePage() {
   const sketchbooks = products.filter(p => p.category === 'sketchbooks')
   const calendars = products.filter(p => p.category === 'calendars')
   const cases = products.filter(p => p.category === 'cases')
-
-  // Get the first product image for each collection to display in the collection card
-  const collections = [
-    { name: 'Wooden Collection', path: '/collections?collection=Wooden Collection' },
-    { name: 'Zento Collection', path: '/collections?collection=Zento Collection' },
-    { name: 'Kuru Toga Collection', path: '/collections?collection=Kuru Toga Collection' },
-  ]
-
-  const getCollectionImage = (collectionName) => {
-    const product = products.find(p => p.collectionName === collectionName && p.imageUrl)
-    return product ? product.imageUrl : null
-  }
-
-  const prevCollection = useCallback(() =>
-    setCollectionIndex(i => (i - 1 + collections.length) % collections.length), [collections.length])
-
-  const nextCollection = useCallback(() =>
-    setCollectionIndex(i => (i + 1) % collections.length), [collections.length])
 
   return (
     <div className="homepage">
@@ -66,39 +70,22 @@ function HomePage() {
       {/* COLLECTION BANNER */}
       <section className="home-collection">
         <h2>Collection</h2>
-        <div className="collection-carousel">
-          {(() => {
-            const col = collections[collectionIndex]
-            const img = getCollectionImage(col.name)
+        <div className="collection-grid">
+          {collections.map((col, i) => {
+            const imgs = products.filter(p => p.collectionName === col.name && p.imageUrl)
+            const currentImg = imgs[collectionIndices[i]]?.imageUrl ?? null
             return (
-              <NavLink to={col.path} className="collection-card collection-card-large">
-                {img
-                  ? <img src={img} alt={col.name} className="collection-card-img" />
+              <NavLink key={col.name} to={col.path} className="collection-card">
+                {currentImg
+                  ? <img key={currentImg} src={currentImg} alt={col.name} className="collection-card-img" />
                   : <div className="collection-card-placeholder" />
                 }
                 <div className="collection-card-overlay">
                   <h3>{col.name}</h3>
-                  <span className="collection-view-label">View Collection →</span>
                 </div>
               </NavLink>
             )
-          })()}
-          <div className="collection-nav">
-            <div className="collection-dots">
-              {collections.map((_, i) => (
-                <button
-                  key={i}
-                  className={`dot-btn${i === collectionIndex ? ' active' : ''}`}
-                  onClick={() => setCollectionIndex(i)}
-                  aria-label={`Go to collection ${i + 1}`}
-                />
-              ))}
-            </div>
-            <div className="collection-arrows">
-              <button className="arrow-btn" onClick={prevCollection} aria-label="Previous collection">&#8592;</button>
-              <button className="arrow-btn" onClick={nextCollection} aria-label="Next collection">&#8594;</button>
-            </div>
-          </div>
+          })}
         </div>
       </section>
 

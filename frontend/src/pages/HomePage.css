@@ -107,29 +107,23 @@ a {
   text-decoration: underline;
 }
 
-/* ── Carousel wrapper ── */
-.collection-carousel {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .collection-card {
+  background: #8a9e80;
   border-radius: 12px;
+  height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
   color: #111;
   position: relative;
   overflow: hidden;
   text-decoration: none;
-}
-
-/* Single large card shown in carousel */
-.collection-card-large {
-  width: 100%;
-  height: 340px;
 }
 
 .collection-card-placeholder {
@@ -138,102 +132,44 @@ a {
   background: #8a9e80;
 }
 
+/* key-based remount triggers fade-in on each new image */
+@keyframes collFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 .collection-card-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.collection-card-large:hover .collection-card-img {
-  transform: scale(1.04);
+  animation: collFadeIn 0.8s ease;
 }
 
 .collection-card-overlay {
   position: relative;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.38);
+  background: rgba(0, 0, 0, 0.32);
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  transition: background 0.3s ease;
+}
+
+.collection-card:hover .collection-card-overlay {
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .collection-card h3 {
-  font-size: 1.8rem;
-  letter-spacing: 0.06em;
-  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
   text-align: center;
   color: #fff;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-
-.collection-view-label {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 0.08em;
-}
-
-/* ── Nav row: dots left, arrows right ── */
-.collection-nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
-.collection-dots {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-right: 4px;
-}
-
-.dot-btn {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,0.45);
-  cursor: pointer;
-  padding: 0;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.dot-btn.active {
-  background: #fff;
-  transform: scale(1.3);
-}
-
-.collection-arrows {
-  display: flex;
-  gap: 8px;
-}
-
-.arrow-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, border-color 0.2s ease;
-  backdrop-filter: blur(4px);
-}
-
-.arrow-btn:hover {
-  background: rgba(255,255,255,0.3);
-  border-color: #fff;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
 
 /* ─── PRODUCT SECTIONS ─── */
