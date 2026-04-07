@@ -34,8 +34,8 @@ router.get('/', getAllProducts);
 router.get('/:id', getProductById);
 
 // Admin endpoints (protected)
-router.post('/', authMiddleware, adminAuth, upload.single('image'), validateProduct, uploadProductAndImage);
-router.put('/:id', authMiddleware, adminAuth, upload.single('image'), updateProduct);
+router.post('/', authMiddleware, adminAuth, upload.fields([{ name: 'image', maxCount: 1 }, { name: 'hoverImage', maxCount: 1 }]), validateProduct, uploadProductAndImage);
+router.put('/:id', authMiddleware, adminAuth, upload.fields([{ name: 'image', maxCount: 1 }, { name: 'hoverImage', maxCount: 1 }]), updateProduct);
 router.delete('/:id', authMiddleware, adminAuth, deleteProduct);
 
 module.exports = router;

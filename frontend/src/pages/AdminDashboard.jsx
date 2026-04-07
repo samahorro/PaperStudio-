@@ -11,7 +11,7 @@ function AdminDashboard() {
   const [orders, setOrders] = useState([])
   const [ordersLoading, setOrdersLoading] = useState(true)
   const [productForm, setProductForm] = useState({
-    name: '', price: '', stock: '', description: '', color: '', category: ''
+    name: '', price: '', stock: '', description: '', color: '', category: '', collectionName: 'None', isNewArrival: false
   })
   const [imageFile, setImageFile] = useState(null)
   const [hoverImageFile, setHoverImageFile] = useState(null)
@@ -45,7 +45,8 @@ function AdminDashboard() {
   }
 
   const handleFormChange = (e) => {
-    setProductForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setProductForm(prev => ({ ...prev, [e.target.name]: value }))
   }
 
   const handleAddProduct = async (e) => {
@@ -71,6 +72,8 @@ function AdminDashboard() {
     formData.append('description', productForm.description)
     formData.append('color', productForm.color)
     formData.append('category', productForm.category)
+    formData.append('collectionName', productForm.collectionName)
+    formData.append('isNewArrival', productForm.isNewArrival)
     formData.append('image', imageFile)
     if (hoverImageFile) formData.append('hoverImage', hoverImageFile)
 
@@ -78,7 +81,7 @@ function AdminDashboard() {
 
     if (data.id || data.product) {
       setFormSuccess('✅ Product added successfully!')
-      setProductForm({ name: '', price: '', stock: '', description: '', color: '', category: '' })
+      setProductForm({ name: '', price: '', stock: '', description: '', color: '', category: '', collectionName: 'None', isNewArrival: false })
       setImageFile(null)
       setHoverImageFile(null)
     } else {
@@ -234,6 +237,22 @@ function AdminDashboard() {
               <div className="admin-field">
                 <label>Color *</label>
                 <input type="text" name="color" value={productForm.color} onChange={handleFormChange} placeholder="e.g. Black" />
+              </div>
+            </div>
+
+            <div className="admin-form-row" style={{ alignItems: 'center' }}>
+              <div className="admin-field">
+                <label>Collection</label>
+                <select name="collectionName" value={productForm.collectionName} onChange={handleFormChange}>
+                  <option value="None">None</option>
+                  <option value="Wooden Collection">Wooden Collection</option>
+                  <option value="Zento Collection">Zento Collection</option>
+                  <option value="Kuru Toga Collection">Kuru Toga Collection</option>
+                </select>
+              </div>
+              <div className="admin-field" style={{ flexDirection: 'row', alignItems: 'center', gap: '8px', paddingTop: '20px' }}>
+                <input type="checkbox" name="isNewArrival" checked={productForm.isNewArrival} onChange={handleFormChange} style={{ width: 'auto' }} />
+                <label style={{ margin: 0, cursor: 'pointer' }}>Mark as New Arrival</label>
               </div>
             </div>
 

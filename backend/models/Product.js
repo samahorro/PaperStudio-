@@ -55,6 +55,10 @@ const Product = sequelize.define('Product', {
   colorsCount: {
     type: DataTypes.INTEGER,
     allowNull: true
+  },
+  collectionName: {
+    type: DataTypes.ENUM('None', 'Wooden Collection', 'Zento Collection', 'Kuru Toga Collection'),
+    defaultValue: 'None'
   }
 }, {
   timestamps: true,
