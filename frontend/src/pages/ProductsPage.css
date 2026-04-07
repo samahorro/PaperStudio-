@@ -29,8 +29,9 @@
 .products-content {
   display: flex;
   gap: 24px;
-  padding: 32px 24px;
+  padding: 32px 48px;
   align-items: start;
+  min-width:0;
 }
 
 /* SCROLLABLE GRID WRAP */

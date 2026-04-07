@@ -8,7 +8,6 @@
   position: relative;
   overflow: hidden;
 
-  /* graph paper effect using CSS gradients */
   background-color: #f0ede0;
   background-image:
     linear-gradient(rgba(180, 170, 140, 0.4) 1px, transparent 1px),
@@ -63,7 +62,7 @@
 }
 
 .login-brand {
-  font-family: 'Nord', sans-serif;
+  font-family: 'lexend', sans-serif;
   font-size: 1.8rem;
   color: #111;
   text-decoration: none;
