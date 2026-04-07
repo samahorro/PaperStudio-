@@ -27,6 +27,18 @@ function HomePage() {
   const calendars = products.filter(p => p.category === 'calendars')
   const cases = products.filter(p => p.category === 'cases')
 
+  // Get the first product image for each collection to display in the collection card
+  const collections = [
+    { name: 'Wooden Collection', path: '/collections?collection=Wooden Collection' },
+    { name: 'Zento Collection', path: '/collections?collection=Zento Collection' },
+    { name: 'Kuru Toga Collection', path: '/collections?collection=Kuru Toga Collection' },
+  ]
+
+  const getCollectionImage = (collectionName) => {
+    const product = products.find(p => p.collectionName === collectionName && p.imageUrl)
+    return product ? product.imageUrl : null
+  }
+
   return (
     <div className="homepage">
 
@@ -48,15 +60,17 @@ function HomePage() {
       <section className="home-collection">
         <h2>Collection</h2>
         <div className="collection-grid">
-          <NavLink to="/collections?collection=Wooden Collection" className="collection-card">
-            <h3>Wooden Collection</h3>
-          </NavLink>
-          <NavLink to="/collections?collection=Zento Collection" className="collection-card">
-            <h3>Zento Collection</h3>
-          </NavLink>
-          <NavLink to="/collections?collection=Kuru Toga Collection" className="collection-card">
-            <h3>Kuru Toga Collection</h3>
-          </NavLink>
+          {collections.map(col => {
+            const img = getCollectionImage(col.name)
+            return (
+              <NavLink key={col.name} to={col.path} className="collection-card">
+                {img && <img src={img} alt={col.name} className="collection-card-img" />}
+                <div className="collection-card-overlay">
+                  <h3>{col.name}</h3>
+                </div>
+              </NavLink>
+            )
+          })}
         </div>
       </section>
 

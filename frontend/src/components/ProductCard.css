@@ -22,10 +22,6 @@
   aspect-ratio: 4 / 3;
   background: #f8f9fa;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
 }
 
 .badge.new-arrival {
@@ -57,6 +53,8 @@
   object-fit: cover;
   transition: opacity 0.5s ease, transform 0.5s ease;
   position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .primary-img {
