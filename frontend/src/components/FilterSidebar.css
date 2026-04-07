@@ -1,7 +1,7 @@
 .filter-sidebar {
   width: 110px;
   flex-shrink: 0;
-  background: #a1a1a1;
+  background: hsl(112, 14%, 70%);
   border-radius: 8px;
   padding: 16px;
   align-self: start;
