@@ -1,21 +1,24 @@
+import { useState } from 'react'
 import './FilterSidebar.css'
-import {useState} from 'react'
-
 
 function FilterSidebar({ filters, setFilters }) {
-
-const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils', 'Cases']
+  const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils', 'Cases']
   const colors = ['Blue', 'Brown', 'Red', 'Green', 'Grey', 'Orange', 'Yellow', 'Purple', 'Pink', 'White', 'Black']
   const priceRanges = ['Under $10', '$10 - $20', '$20 - $50', 'Over $50']
-
+  const collections = ['Wooden Collection', 'Zento Collection', 'Kuru Toga Collection']
 
   const [collapsed, setCollapsed] = useState({
-    category: false,
-    color: false,
-    inStock: false,
+    productType: false,
+    collection: false,
+    colors: false,
+    availability: false,
     price: false
   })
-  
+
+  const toggleCollapse = (section) => {
+    setCollapsed(prev => ({ ...prev, [section]: !prev[section] }))
+  }
+
   const handleProductType = (type) => {
     setFilters(prev => ({
       ...prev,
@@ -38,16 +41,13 @@ const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils'
   }
 
   const handlePriceRange = (range) => {
-    // convert label to minPrice/maxPrice values
     const priceMap = {
-      'Under $10':   { minPrice: 0,   maxPrice: 10 },
-      '$10 - $20':   { minPrice: 10,  maxPrice: 20 },
-      '$20 - $50':   { minPrice: 20,  maxPrice: 50 },
-      'Over $50':    { minPrice: 50,  maxPrice: null },
+      'Under $10': { minPrice: 0,  maxPrice: 10 },
+      '$10 - $20': { minPrice: 10, maxPrice: 20 },
+      '$20 - $50': { minPrice: 20, maxPrice: 50 },
+      'Over $50':  { minPrice: 50, maxPrice: null },
     }
     const selected = priceMap[range]
-
-    // if same range clicked again, deselect it
     if (filters.minPrice === selected.minPrice && filters.maxPrice === selected.maxPrice) {
       setFilters(prev => ({ ...prev, minPrice: null, maxPrice: null }))
     } else {
@@ -61,11 +61,11 @@ const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils'
 
       {/* PRODUCT TYPE */}
       <div className="filter-section">
-        <div className="filter-section-header">
+        <div className="filter-section-header" onClick={() => toggleCollapse('productType')}>
           <h4>Product Type</h4>
-          <span className="filter-collapse">—</span>
+          <span className="filter-collapse">{collapsed.productType ? '+' : '—'}</span>
         </div>
-        {productTypes.map(type => (
+        {!collapsed.productType && productTypes.map(type => (
           <label key={type} className="filter-option">
             <input
               type="checkbox"
@@ -79,16 +79,19 @@ const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils'
 
       {/* COLLECTION */}
       <div className="filter-section">
-        <div className="filter-section-header">
+        <div className="filter-section-header" onClick={() => toggleCollapse('collection')}>
           <h4>Collection</h4>
-          <span className="filter-collapse">—</span>
+          <span className="filter-collapse">{collapsed.collection ? '+' : '—'}</span>
         </div>
-        {['Wooden Collection', 'Zento Collection', 'Kuru Toga Collection'].map(col => (
+        {!collapsed.collection && collections.map(col => (
           <label key={col} className="filter-option">
             <input
               type="checkbox"
               checked={filters.collectionName === col}
-              onChange={() => setFilters(prev => ({ ...prev, collectionName: prev.collectionName === col ? '' : col }))}
+              onChange={() => setFilters(prev => ({
+                ...prev,
+                collectionName: prev.collectionName === col ? '' : col
+              }))}
             />
             {col}
           </label>
@@ -97,11 +100,11 @@ const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils'
 
       {/* COLORS */}
       <div className="filter-section">
-        <div className="filter-section-header">
+        <div className="filter-section-header" onClick={() => toggleCollapse('colors')}>
           <h4>Colors</h4>
-          <span className="filter-collapse">—</span>
+          <span className="filter-collapse">{collapsed.colors ? '+' : '—'}</span>
         </div>
-        {colors.map(color => (
+        {!collapsed.colors && colors.map(color => (
           <label key={color} className="filter-option">
             <input
               type="checkbox"
@@ -115,35 +118,39 @@ const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils'
 
       {/* AVAILABILITY */}
       <div className="filter-section">
-        <div className="filter-section-header">
+        <div className="filter-section-header" onClick={() => toggleCollapse('availability')}>
           <h4>Availability</h4>
-          <span className="filter-collapse">—</span>
+          <span className="filter-collapse">{collapsed.availability ? '+' : '—'}</span>
         </div>
-        <label className="filter-option">
-          <input
-            type="checkbox"
-            checked={filters.inStock === true}
-            onChange={() => handleAvailability(true)}
-          />
-          In stock
-        </label>
-        <label className="filter-option">
-          <input
-            type="checkbox"
-            checked={filters.inStock === false}
-            onChange={() => handleAvailability(false)}
-          />
-          Out of stock
-        </label>
+        {!collapsed.availability && (
+          <>
+            <label className="filter-option">
+              <input
+                type="checkbox"
+                checked={filters.inStock === true}
+                onChange={() => handleAvailability(true)}
+              />
+              In stock
+            </label>
+            <label className="filter-option">
+              <input
+                type="checkbox"
+                checked={filters.inStock === false}
+                onChange={() => handleAvailability(false)}
+              />
+              Out of stock
+            </label>
+          </>
+        )}
       </div>
 
       {/* PRICE RANGE */}
       <div className="filter-section">
-        <div className="filter-section-header">
+        <div className="filter-section-header" onClick={() => toggleCollapse('price')}>
           <h4>Price Range</h4>
-          <span className="filter-collapse">—</span>
+          <span className="filter-collapse">{collapsed.price ? '+' : '—'}</span>
         </div>
-        {priceRanges.map(range => (
+        {!collapsed.price && priceRanges.map(range => (
           <label key={range} className="filter-option">
             <input
               type="checkbox"
