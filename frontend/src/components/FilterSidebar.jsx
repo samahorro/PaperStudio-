@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './FilterSidebar.css'
 
 function FilterSidebar({ filters, setFilters }) {
-  const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils', 'Cases']
+  const productTypes = ['Notebooks', 'Books', 'Desk Supplies', 'Pens', 'Pencils', 'Cases']
   const colors = ['Blue', 'Brown', 'Red', 'Green', 'Grey', 'Orange', 'Yellow', 'Purple', 'Pink', 'White', 'Black']
   const priceRanges = ['Under $10', '$10 - $20', '$20 - $50', 'Over $50']
   const collections = ['Wooden Collection', 'Zento Collection', 'Kuru Toga Collection']

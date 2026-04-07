@@ -35,8 +35,8 @@ if (hideNavbar) return null
         <NavLink to="/collections?category=pens" className="collection-link">Pens</NavLink>
         <NavLink to="/collections?category=pencils" className="collection-link">Pencils</NavLink>
         <NavLink to="/collections?category=notebooks" className="collection-link">Notebooks</NavLink>
-        <NavLink to="/collections?category=sketchbooks" className="collection-link">Sketchbooks</NavLink>
-        <NavLink to="/collections?category=calendars" className="collection-link">Calendars</NavLink>
+        <NavLink to="/collections?category=books" className="collection-link">Books</NavLink>
+        <NavLink to="/collections?category=desk-supplies" className="collection-link">Desk Supplies</NavLink>
         <NavLink to="/collections?category=cases" className="collection-link">Cases</NavLink>
     </div>
     </div>
