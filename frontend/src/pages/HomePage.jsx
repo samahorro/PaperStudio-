@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import { getAllProducts } from '../utils/api'
 import ProductCard from '../components/ProductCard'
@@ -9,6 +9,7 @@ import "./HomePage.css"
 function HomePage() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [collectionIndex, setCollectionIndex] = useState(0)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -39,6 +40,12 @@ function HomePage() {
     return product ? product.imageUrl : null
   }
 
+  const prevCollection = useCallback(() =>
+    setCollectionIndex(i => (i - 1 + collections.length) % collections.length), [collections.length])
+
+  const nextCollection = useCallback(() =>
+    setCollectionIndex(i => (i + 1) % collections.length), [collections.length])
+
   return (
     <div className="homepage">
 
@@ -59,18 +66,39 @@ function HomePage() {
       {/* COLLECTION BANNER */}
       <section className="home-collection">
         <h2>Collection</h2>
-        <div className="collection-grid">
-          {collections.map(col => {
+        <div className="collection-carousel">
+          {(() => {
+            const col = collections[collectionIndex]
             const img = getCollectionImage(col.name)
             return (
-              <NavLink key={col.name} to={col.path} className="collection-card">
-                {img && <img src={img} alt={col.name} className="collection-card-img" />}
+              <NavLink to={col.path} className="collection-card collection-card-large">
+                {img
+                  ? <img src={img} alt={col.name} className="collection-card-img" />
+                  : <div className="collection-card-placeholder" />
+                }
                 <div className="collection-card-overlay">
                   <h3>{col.name}</h3>
+                  <span className="collection-view-label">View Collection →</span>
                 </div>
               </NavLink>
             )
-          })}
+          })()}
+          <div className="collection-nav">
+            <div className="collection-dots">
+              {collections.map((_, i) => (
+                <button
+                  key={i}
+                  className={`dot-btn${i === collectionIndex ? ' active' : ''}`}
+                  onClick={() => setCollectionIndex(i)}
+                  aria-label={`Go to collection ${i + 1}`}
+                />
+              ))}
+            </div>
+            <div className="collection-arrows">
+              <button className="arrow-btn" onClick={prevCollection} aria-label="Previous collection">&#8592;</button>
+              <button className="arrow-btn" onClick={nextCollection} aria-label="Next collection">&#8594;</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -79,10 +107,12 @@ function HomePage() {
           {pens.length > 0 && (
             <section className="home-section">
               <h2>Pens</h2>
-              <div className="product-row">
-                {pens.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {pens.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -90,10 +120,12 @@ function HomePage() {
           {pencils.length > 0 && (
             <section className="home-section">
               <h2>Pencils</h2>
-              <div className="product-row">
-                {pencils.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {pencils.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -101,10 +133,12 @@ function HomePage() {
           {cases.length > 0 && (
             <section className="home-section dark">
               <h2>Cases</h2>
-              <div className="product-row">
-                {cases.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {cases.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -112,10 +146,12 @@ function HomePage() {
           {notebooks.length > 0 && (
             <section className="home-section">
               <h2>Notebooks</h2>
-              <div className="product-row">
-                {notebooks.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {notebooks.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -123,10 +159,12 @@ function HomePage() {
           {sketchbooks.length > 0 && (
             <section className="home-section dark">
               <h2>Sketchbooks</h2>
-              <div className="product-row">
-                {sketchbooks.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {sketchbooks.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -134,10 +172,12 @@ function HomePage() {
           {calendars.length > 0 && (
             <section className="home-section">
               <h2>Calendars</h2>
-              <div className="product-row">
-                {calendars.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="product-row-scroll">
+                <div className="product-row">
+                  {calendars.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               </div>
             </section>
           )}
