@@ -67,6 +67,24 @@ const productTypes = ['Notebooks', 'Sketchbooks', 'Calendars', 'Pens', 'Pencils'
         ))}
       </div>
 
+      {/* COLLECTION */}
+      <div className="filter-section">
+        <div className="filter-section-header">
+          <h4>Collection</h4>
+          <span className="filter-collapse">—</span>
+        </div>
+        {['Wooden Collection', 'Zento Collection', 'Kuru Toga Collection'].map(col => (
+          <label key={col} className="filter-option">
+            <input
+              type="checkbox"
+              checked={filters.collectionName === col}
+              onChange={() => setFilters(prev => ({ ...prev, collectionName: prev.collectionName === col ? '' : col }))}
+            />
+            {col}
+          </label>
+        ))}
+      </div>
+
       {/* COLORS */}
       <div className="filter-section">
         <div className="filter-section-header">

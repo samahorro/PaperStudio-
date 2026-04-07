@@ -48,9 +48,15 @@ function HomePage() {
       <section className="home-collection">
         <h2>Collection</h2>
         <div className="collection-grid">
-          <NavLink to="/collections?category=notebooks" className="collection-card" />
-          <NavLink to="/collections?category=pencils" className="collection-card" />
-          <NavLink to="/collections?category=cases" className="collection-card" />
+          <NavLink to="/collections?collection=Wooden Collection" className="collection-card">
+            <h3>Wooden Collection</h3>
+          </NavLink>
+          <NavLink to="/collections?collection=Zento Collection" className="collection-card">
+            <h3>Zento Collection</h3>
+          </NavLink>
+          <NavLink to="/collections?collection=Kuru Toga Collection" className="collection-card">
+            <h3>Kuru Toga Collection</h3>
+          </NavLink>
         </div>
       </section>
 

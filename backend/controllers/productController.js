@@ -21,10 +21,11 @@ const s3 = new S3Client(s3Config);
 
 const getAllProducts = async (req, res) => {
   try {
-    const { category, color, inStock, minPrice, maxPrice, search } = req.query;
+    const { category, color, inStock, minPrice, maxPrice, search, collectionName } = req.query;
     const where = {};
 
     if (category) where.category = category;
+    if (collectionName) where.collectionName = collectionName;
     if (color) where.color = { [Op.iLike]: `%${color}%` };
     if (inStock !== undefined) where.inStock = inStock === 'true';
 
