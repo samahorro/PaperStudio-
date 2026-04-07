@@ -61,6 +61,6 @@ jobs:
           application_name: PaperStudio
           environment_name: paperstudio-env
           region: us-east-1
-          version_label: "v-${{ github.sha }}"
+          version_label: "v-${{ github.sha }}-${{ github.run_number }}"
           deployment_package: deploy-eb.zip
           wait_for_environment_recovery: 60
