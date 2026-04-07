@@ -17,7 +17,7 @@ a {
 
 .homepage {
   width: 100%;
-  padding-top: 90px; /* to account for fixed navbar */
+  padding-top: 90px;
 }
 .home-hero {
   position: relative;
@@ -92,9 +92,11 @@ a {
 
 .home-collection {
   background: #6b7f62;
-  padding: 40px 55px;
+  padding: 32px 24px;
   margin: 40px 0;
   border-radius: 12px;
+  max-width: 1000px;
+  margin: 32px auto;
 }
 
 .home-collection h2 {
@@ -116,7 +118,7 @@ a {
 .collection-card {
   background: #8a9e80;
   border-radius: 12px;
-  height: 260px;
+  aspect-ratio: 3/4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,7 +176,9 @@ a {
 
 /* ─── PRODUCT SECTIONS ─── */
 .home-section {
-  padding: 32px 55px;
+  padding: 24px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .home-section h2 {
@@ -187,7 +191,6 @@ a {
 .product-row-scroll {
   overflow-x: auto;
   padding-bottom: 8px;
-  /* allow cards to visually overflow upward on hover without clipping */
   padding-top: 12px;
   margin-top: -12px;
 }
@@ -198,7 +201,6 @@ a {
   width: max-content;
 }
 
-/* Force uniform card sizing on the homepage product rows */
 .product-row-scroll .product-card {
   flex: 0 0 220px;
   max-width: 220px;

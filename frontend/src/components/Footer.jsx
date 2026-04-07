@@ -16,14 +16,6 @@ function Footer() {
     <NavLink to="/contact">Contact Us</NavLink>
   </div>
 
-  <div className="footer-icons">
-    <h4>Follow Us</h4>
-    <div className="footer-social">
-      <span className="social-dot"></span>
-      <span className="social-dot"></span>
-      <span className="social-dot"></span>
-    </div>
-  </div>
 
   <div className="footer-bottom">
     <p>© 2026 All Right Reserved</p>
