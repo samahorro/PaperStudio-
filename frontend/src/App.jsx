@@ -29,6 +29,7 @@ function AppContent() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/collections" element={<ProductsPage />} />
+        <Route path="/search" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailPage currentUser={currentUser} />} />
         <Route path="/cart" element={<CartPage currentUser={currentUser} />} />
         <Route path="/account" element={<AccountPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
