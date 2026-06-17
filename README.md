@@ -1,6 +1,6 @@
 # PaperStudio: Full-Stack Web App Security & Cloud Hardening
 
-**GitHub description:** Full-stack e-commerce web app built with React, Node.js, PostgreSQL, and AWS, focused on cloud hardening, security monitoring, IAM/RBAC, API protection, logging, encryption, backups, and posture assessment.
+Full-stack e-commerce web app built with React, Node.js, PostgreSQL, and AWS, focused on cloud hardening, security monitoring, IAM/RBAC, API protection, logging, encryption, backups, and posture assessment.
 
 PaperStudio is a full-stack mock e-commerce web application for stationery products. The project includes a React/Vite frontend, Node.js/Express backend, PostgreSQL data layer, and AWS cloud deployment design. Beyond building the frontend and backend, this repository documents how the application was hardened and assessed from a cybersecurity perspective.
 
@@ -18,14 +18,6 @@ Small web applications often fail because the security work stops after the app 
 - Added SOC-relevant logging and monitoring concepts using CloudTrail and CloudWatch Logs Insights for investigation and detection use cases.
 - Used Prowler to assess AWS security posture and map findings to cloud security frameworks.
 - Documented threats, trust boundaries, security controls, and future hardening steps.
-
-## My Contributions
-
-- Contributed to both the frontend and backend development of the PaperStudio e-commerce application.
-- Helped implement and document application security controls across authentication, authorization, validation, sanitization, and rate limiting.
-- Helped design and explain the AWS security architecture for compute, storage, database, identity, logging, encryption, and recovery.
-- Mapped the project to security frameworks including CIS AWS Foundations, NIST SP 800-53, AWS Well-Architected Security Pillar, CSA cloud threats, and PCI DSS concepts.
-- Participated in security posture assessment and hardening recommendations using Prowler and AWS-native services.
 
 ## Technology Stack
 
@@ -103,8 +95,6 @@ The project considers common threats against a small AWS-hosted e-commerce appli
 - Database exposure from weak network segmentation.
 - Payment workflow tampering.
 - Insufficient backup and recovery planning.
-
-See [`docs/threat-model.md`](docs/threat-model.md) for a STRIDE-style threat model and mitigation mapping.
 
 ## Compliance and Framework Mapping
 
